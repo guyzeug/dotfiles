@@ -1,6 +1,5 @@
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 
-
 " set the font depending on the client
 if has("gui_running")
   if has("gui_gtk2")
@@ -20,6 +19,12 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader><Leader> V
 
 set hidden
+
+set backupdir=$home/.vim/backup//
+" adding double slash at then end of the swap path makes the backup filenames
+" include their location so that two files with the same name can be edited at
+" the same time and have two different backup files
+set directory=$home/.vim/swp//
 
 filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
 set t_Co=256              " enable 256-color mode.
