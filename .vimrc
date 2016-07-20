@@ -13,10 +13,17 @@ else
   set guifont=Consolas:h11:cANSI
 endif
 
-let mapleader = "\<Space>"
-let maplocalleader = ","
+let mapleader = ","
+let maplocalleader = "\\"
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader><Leader> V
+nnoremap <Leader>ev :vsplit $home\dotfiles\.vimrc<CR>   " split vertically and
+" edit vimrc
+nnoremap <Leader>sv :source $home\dotfiles\.vimrc<CR>   " reload .vimrc 
+nnoremap H 0
+nnoremap L $
+nnoremap <leader>j L
+nnoremap <leader>k H
 
 set hidden
 
