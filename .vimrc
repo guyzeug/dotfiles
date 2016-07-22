@@ -76,3 +76,12 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+
+
+" Visual mode mappings {{{
+vnoremap < <gv
+vnoremap > >gv
+
+" Execute dot in the selection
+vnoremap . :norm.<CR>
+" }}}
