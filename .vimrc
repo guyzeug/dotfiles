@@ -1,5 +1,7 @@
 set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 
+set lines=35 columns=150
+
 " set the font depending on the client
 if has("gui_running")
   if has("gui_gtk2")
@@ -13,7 +15,7 @@ else
   set guifont=Consolas:h11:cANSI
 endif
 
-let mapleader = ","
+let mapleader = " "
 let maplocalleader = "\\"
 nnoremap <Leader>w :w<CR>
 nnoremap <Leader><Leader> V
@@ -22,6 +24,9 @@ nnoremap <Leader>ev :vsplit $home\dotfiles\.vimrc<CR>   " split vertically and
 nnoremap <Leader>sv :source $home\dotfiles\.vimrc<CR>   " reload .vimrc 
 
 set hidden
+
+set fileformat=unix
+set encoding=utf-8
 
 set backupdir=$home/.vim/backup//
 " adding double slash at then end of the swap path makes the backup filenames
@@ -34,6 +39,7 @@ set t_Co=256              " enable 256-color mode.
 syntax enable             " enable syntax highlighting (previously syntax on).
 colorscheme desert        " set colorscheme
 set number                " show line numbers
+set relativenumber        " show relative numbers
 set laststatus=2          " last window always has a statusline
 
 filetype indent on        " activates indenting for files
@@ -85,3 +91,10 @@ vnoremap > >gv
 " Execute dot in the selection
 vnoremap . :norm.<CR>
 " }}}
+
+call plug#begin('~/.vim/plugged')
+" Add plugins to &runtimepath
+
+Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+
+call plug#end()
