@@ -2,6 +2,10 @@ set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
 
 set lines=35 columns=150
 
+" apparently this is how to avoid automatic line breaks when typing long lines
+set textwidth=0
+set wrapmargin=0
+
 " set the font depending on the client
 if has("gui_running")
   if has("gui_gtk2")
@@ -28,11 +32,11 @@ set hidden
 set fileformat=unix
 set encoding=utf-8
 
-set backupdir=$home/.vim/backup//
+set backupdir=$home/vim_temp/backup//
 " adding double slash at then end of the swap path makes the backup filenames
 " include their location so that two files with the same name can be edited at
 " the same time and have two different backup files
-set directory=$home/.vim/swp//
+set directory=$home/vim_temp/swp//
 
 filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
 set t_Co=256              " enable 256-color mode.
@@ -98,3 +102,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 
 call plug#end()
+
+let g:ctrlp_max_files=0 " needed ?
+let g:ctrlp_max_depth=40 " needed ?
+let g:ctrlp_working_path_mode='' " apparently needed (tested on dev.php)
