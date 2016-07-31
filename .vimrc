@@ -29,6 +29,9 @@ map <right> <nop>
 " The way it should have been.
 noremap Y y$
  
+" If a file is changed outside of vim, automatically reload it without asking
+set autoread
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Events                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -59,7 +62,7 @@ colorscheme desert        " set colorscheme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set number                " show line numbers
 set relativenumber        " show relative numbers
-set cursorline            " highlight current line
+set nocursorline          " do not highlight current line (it can make redrawing window slow)
 set laststatus=2          " last window always has a statusline
 set hlsearch              " highlight all search matches
 set incsearch             " But do highlight as you type your search
@@ -69,7 +72,13 @@ set ruler                 " Always show info along bottom
 set noshowmatch           " Don't jump cursor to matching brace
 set cmdheight=1
 set scrolloff=5           " always show me the next/previous 5 lines
-set showcmd               " display incomplete command
+set showcmd               " display incomplete commAnd
+
+set equalalways           " Multiple windows, when created, are equal in size"
+set splitbelow splitright " Put the new windows to the right/bottom"
+
+" Don't update the display while executing macros
+set lazyredraw
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. Text Formatting/Layout                                                 "
@@ -129,8 +138,6 @@ set wildmode=list:longest,full
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
 
-" set lazyredraw          " redraw only when we need to.
-
 " Move lines with Alt + j / k
 " nnoremap <A-j> :m .+1<CR>==
 " nnoremap <A-k> :m .-2<CR>==
@@ -156,6 +163,7 @@ set fileformat=unix
 set ffs=unix,dos,mac " support all three file-format with unix no. 1
 set encoding=utf-8 " Force UTF-8 as default
 set termencoding=utf-8 " Also for terminals.
+set fileformats=unix
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
@@ -169,6 +177,8 @@ set termencoding=utf-8 " Also for terminals.
 " Below is to fix issues with the ABOVE mappings in quickfix window
 "autocmd CmdwinEnter * nnoremap <CR> <CR>
 "autocmd BufReadPost quickfix nnoremap <CR> <CR>
+
+" set ttyfast                   " we have a fast terminal
 " ------------------------------------------------
 
 
@@ -183,6 +193,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 
 call plug#end()
+
+
 
 let g:ctrlp_max_files=0 " needed ?
 let g:ctrlp_max_depth=40 " needed ?
@@ -213,15 +225,9 @@ noremap <c-left> gT
 nnoremap <leader>t :tabc<CR>
  
 
-" Windows *********************************************************************"
-set equalalways           " Multiple windows, when created, are equal in size"
-set splitbelow splitright " Put the new windows to the right/bottom"
  
-hi CursorLine term=none cterm=none ctermbg=3      " adjust color
  
-set ttyfast                   " we have a fast terminal
  
-set fileformats=unix
  
  
  
