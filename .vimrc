@@ -1,36 +1,9 @@
-set nocompatible          " get rid of Vi compatibility mode. SET FIRST!
-
-set lines=35 columns=150
-
-" apparently this is how to avoid automatic line breaks when typing long lines
-set textwidth=0
-set wrapmargin=0
-
-" set the font depending on the client
-if has("gui_running")
-  if has("gui_gtk2")
-    set guifont=Inconsolata\ 14
-  elseif has("gui_macvim")
-    set guifont=Menlo\ Regular:h14
-  elseif has("gui_win32")
-    set guifont=Consolas:h11:cANSI
-  endif
-else
-  set guifont=Consolas:h11:cANSI
-endif
-
-let mapleader = " "
-let maplocalleader = "\\"
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader><Leader> V
-nnoremap <Leader>ev :vsplit $home\dotfiles\.vimrc<CR>   " split vertically and
-" edit vimrc
-nnoremap <Leader>sv :source $home\dotfiles\.vimrc<CR>   " reload .vimrc 
-
-set hidden
-
-set fileformat=unix
-set encoding=utf-8
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 01. General                                                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use Vim settings, rather then Vi settings. This setting must be as early as
+" possible, as it has side effects.
+set nocompatible
 
 set backupdir=$home/vim_temp/backup//
 " adding double slash at then end of the swap path makes the backup filenames
@@ -38,63 +11,171 @@ set backupdir=$home/vim_temp/backup//
 " the same time and have two different backup files
 set directory=$home/vim_temp/swp//
 
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
-set t_Co=256              " enable 256-color mode.
-syntax enable             " enable syntax highlighting (previously syntax on).
-colorscheme desert        " set colorscheme
-set number                " show line numbers
-set relativenumber        " show relative numbers
-set laststatus=2          " last window always has a statusline
-
-filetype indent on        " activates indenting for files
-set hlsearch            " Don't continue to highlight searched phrases.
-set incsearch             " But do highlight as you type your search.
-set ignorecase            " Make searches case-insensitive.
-"set ruler                 " Always show info along bottom.
-set autoindent            " auto-indent
-set tabstop=4             " tab spacing
-set softtabstop=4         " unify
-set shiftwidth=4          " indent/outdent by 4 columns
-set shiftround            " always indent/outdent to the nearest tabstop
-set expandtab             " use spaces instead of tabs
-"set smarttab              " use tabs at the start of a line, spaces elsewhere
-set nowrap                " don't wrap text
-
-set showmatch " show matching bracket
-
-
 " swap ; and : Convenient
 nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
 
-set wildmenu            " visual autocomplete for command menu
-set lazyredraw          " redraw only when we need to.
+" jk is escape
+inoremap jk <esc>
+
+" To stop using the arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" The way it should have been.
+noremap Y y$
+ 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 02. Events                                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 03. Theme/Colors                                                           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set the font depending on the client
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ 14
+    elseif has("gui_macvim")
+        set guifont=Menlo\ Regular:h14
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    endif
+else
+    set guifont=Consolas:h11:cANSI
+endif
+
+set t_Co=256              " enable 256-color mode
+syntax enable             " enable syntax highlighting (previously syntax on)
+colorscheme desert        " set colorscheme
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 04. Vim UI                                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set number                " show line numbers
+set relativenumber        " show relative numbers
+set cursorline            " highlight current line
+set laststatus=2          " last window always has a statusline
+set hlsearch              " highlight all search matches
+set incsearch             " But do highlight as you type your search
+set ignorecase smartcase  " make searches case-sensitive only if they contain upper-case characters
+set gdefault              " Never have to type /g at the end of search / replace again
+set ruler                 " Always show info along bottom
+set noshowmatch           " Don't jump cursor to matching brace
+set cmdheight=1
+set scrolloff=5           " always show me the next/previous 5 lines
+set showcmd               " display incomplete command
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 05. Text Formatting/Layout                                                 "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set autoindent            " auto-indent
+set tabstop=4             " tab spacing
+set softtabstop=4         " unify
+set shiftwidth=4          " indent/outdent by 4 columns
+set shiftround            " always indent/outdent to the nearest tabstop
+set expandtab             " use spaces instead of tabs
+"set smartindent           " automatically insert one extra level ofi ndentation
+"set smarttab              " use tabs at the start of a line, spaces elsewhere
+set nowrap                " don't wrap text
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 06. Key Bindings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader = "\<Space>"
+let maplocalleader = ","
+
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader><Leader> V
+nnoremap <Leader>ev :vsplit ~\.vimrc<CR>   " split vertically and
+" edit vimrc
+nnoremap <Leader>sv :source ~\.vimrc<CR>   " reload .vimrc 
+
+" Visual mode mappings 
+vnoremap < <gv vnoremap > >gv
+
+" Execute dot in the selection
+vnoremap . :norm.<CR>
+
+" ------------------------------------------------
+" TO CONFIRM
+set lines=35 columns=150
+
+" Clear highlight search results with <esc> nnoremap <esc>
+" :nohlsearch<return><esc> nnoremap <silent> <leader>, :noh<cr> " Stop
+" highlight after searching
+
+set showmode
+
+" apparently this is how to avoid automatic line breaks when typing long lines
+set textwidth=0
+set wrapmargin=0
+
+" Open new split panes to right and bottom, which feels more natural set
+" splitbelow
+set splitright
+
+" make tab completion for files/buffers act like bash
+set wildmenu
+" use emacs-style tab completion when selecting files, etc
+set wildmode=longest,list
+" or
+set wildmode=list:longest,full
+" allow unsaved background buffers and remember marks/undo for them
+set hidden
+
+" set lazyredraw          " redraw only when we need to.
+
+" Move lines with Alt + j / k
+" nnoremap <A-j> :m .+1<CR>==
+" nnoremap <A-k> :m .-2<CR>==
+" inoremap <A-j> <Esc>:m .+1<CR>==gi
+" inoremap <A-k> <Esc>:m .-2<CR>==gi
+" vnoremap <A-j> :m '>+1<CR>gv=gv
+" vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " move vertically by visual line
 "nnoremap j gj
 "nnoremap k gk
+"vnoremap j gj
+"vnoremap k gk
+
+set report=0 " Tell me how many lines commands change. Always.
+" what to show when I hit :set list
+"set listchars=eol:¬,tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:⁝
+
+" Display extra whitespace
+"set list listchars=tab:»·,trail:·,nbsp:·
+
+set fileformat=unix
+set ffs=unix,dos,mac " support all three file-format with unix no. 1
+set encoding=utf-8 " Force UTF-8 as default
+set termencoding=utf-8 " Also for terminals.
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+" GLG => initial feedback is that it can be visually annoying
+"map N Nzz
+"map n nzz
+
+" Taken from: https://github.com/colbycheeze/dotfiles/blob/master/vimrc
+" Use enter to create new lines w/o entering insert mode
+"nnoremap <CR> o<Esc>
+" Below is to fix issues with the ABOVE mappings in quickfix window
+"autocmd CmdwinEnter * nnoremap <CR> <CR>
+"autocmd BufReadPost quickfix nnoremap <CR> <CR>
+" ------------------------------------------------
 
 
-" jk is escape
-inoremap jk <esc>
-
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+" Ctrl-P settings.
+"let g:ctrlp_custom_ignore = { \ 'dir': '\.git$\|node_modules$\|\.hg$\|\.svn$', \ 'file': '\.exe$\|\.so$' \ }
 
 
-" Visual mode mappings {{{
-vnoremap < <gv
-vnoremap > >gv
-
-" Execute dot in the selection
-vnoremap . :norm.<CR>
-" }}}
 
 call plug#begin('~/.vim/plugged')
 " Add plugins to &runtimepath
@@ -106,3 +187,223 @@ call plug#end()
 let g:ctrlp_max_files=0 " needed ?
 let g:ctrlp_max_depth=40 " needed ?
 let g:ctrlp_working_path_mode='' " apparently needed (tested on dev.php)
+
+
+" Use Q for formatting the current paragraph (or selection)
+vmap Q gq
+nmap Q gqap
+
+ 
+" Moving in buffers.
+nnoremap <C-S-tab> :bprev<CR>
+nnoremap <C-tab> :bnext<CR> 
+ 
+" Moving and resizing in windows.
+nnoremap + <C-W>+
+nnoremap _ <C-W>-
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <leader>w <C-w>c
+ 
+" Moving in tabs
+noremap <c-right> gt
+noremap <c-left> gT
+nnoremap <leader>t :tabc<CR>
+ 
+
+" Windows *********************************************************************"
+set equalalways           " Multiple windows, when created, are equal in size"
+set splitbelow splitright " Put the new windows to the right/bottom"
+ 
+hi CursorLine term=none cterm=none ctermbg=3      " adjust color
+ 
+set ttyfast                   " we have a fast terminal
+ 
+set fileformats=unix
+ 
+ 
+ 
+ 
+"" Wildcards to ignore
+""
+"" Finder metadata
+set wildignore+=.DS_Store
+"" Source control
+set wildignore+=.git/**
+set wildignore+=.hg/**
+set wildignore+=.svn/**
+set wildignore+=.keep,.gitkeep,.hgkeep
+"" Temporary files
+set wildignore+=tmp/**
+set wildignore+=*.tmp
+"" ~/.vim
+set wildignore+=backup/**
+set wildignore+=undo/**
+"" Native objects/debug symbols/binaries
+set wildignore+=*.o,*.obj,*.dSYM,*.exe,*.app,*.ipa
+"" Java
+set wildignore+=target/**
+set wildignore+=*.class,*.jar
+"" IDEA
+set wildignore+=.idea/**
+"" Ruby
+set wildignore+=.bundle/**
+"" Python
+set wildignore+=*.pyc
+"" CocoaPods/Carthage
+set wildignore+=Pods/**
+set wildignore+=Carthage/**
+"" Common build directories
+set wildignore+=build/**
+set wildignore+=dist/**
+"" Go (projects built with gb)
+set wildignore+=vendor/src/**
+"" JavaScript
+set wildignore+=node_modules/**
+"" Ansible
+set wildignore+=.imported_roles/**
+ 
+ 
+""
+"" Filetype/highlighting/colorscheme options
+""
+"" Default shell dialect
+let g:is_bash = 1
+"" Fix the filetype of certain misidentified shell scripts
+function! s:FixShellFt()
+  if &filetype == '' || &filetype == 'conf'
+    set filetype=sh
+  endif
+endfunction
+"" Fix the filetype for things that look like nginx config
+function! s:FixNginxFt()
+  if (&filetype == '' || &filetype == 'conf') && &filetype != 'yaml'
+    set filetype=nginx
+  endif
+endfunction
+"" Filetype corrections
+if has('autocmd')
+  au BufRead,BufNewFile Fastfile     set filetype=ruby
+  au BufRead,BufNewFile *gemrc*      set filetype=yaml
+  au BufRead,BufNewFile *.gradle     set filetype=groovy
+  au BufRead,BufNewFile *.hjs        set filetype=handlebars
+  au BufRead,BufNewFile jquery.*.js  set filetype=javascript syntax=jquery
+  au BufRead,BufNewFile *.jquery.js  set filetype=javascript syntax=jquery
+  au BufRead,BufNewFile *.json       set filetype=javascript
+  au BufRead,BufNewFile *.mako       set filetype=mako
+  au BufRead,BufNewFile *.ru         set filetype=ruby
+  au BufRead,BufNewFile *.socket     set filetype=systemd
+  au BufRead,BufNewFile Procfile     set filetype=yaml
+  au BufRead,BufNewFile *env         call s:FixShellFt()
+  au BufRead,BufNewFile *.env.*      call s:FixShellFt()
+  au BufRead,BufNewFile *nginx*.conf call s:FixNginxFt()
+  au BufRead,BufNewFile */nginx/*    call s:FixNginxFt()
+  au BufRead,BufNewFile *profile     call s:FixShellFt()
+  au BufRead,BufNewFile *vimrc*      set filetype=vim
+  au BufRead,BufNewFile *rc          call s:FixShellFt()
+  au BufRead,BufNewFile *rc_*        call s:FixShellFt()
+  au BufRead,BufNewFile *.yml        set filetype=yaml
+  au BufRead,BufNewFile *.zsh*       set filetype=zsh
+  au FileType gitcommit setlocal spell
+  au FileType latex     setlocal spell
+  au FileType markdown  setlocal spell
+  au FileType plaintex  setlocal spell
+  au FileType text      setlocal spell
+endif
+ 
+ 
+"" Syntastic options
+let g:syntastic_check_on_open = 1
+let g:syntastic_quiet_messages = {'level': 'warnings'}
+ 
+"" Flip-flop buffers
+nnoremap <leader><leader> <C-^>
+"" Tab management
+nmap <silent> <leader>tc :<C-u>tabnew<cr>
+nmap <silent> <leader>tp :<C-u>tabprev<cr>
+nmap <silent> <leader>tn :<C-u>tabnext<cr>
+nmap <silent> <leader>td :<C-u>tabclose<cr>
+ 
+
+""
+"" Indent options - default is 2 spaces
+""
+function! Spaces(num)
+  set expandtab
+  set smarttab
+  let &tabstop = a:num
+  let &softtabstop = 0
+  let &shiftwidth = a:num
+endfunction
+function! Tabs(size)
+  set noexpandtab
+  set nosmarttab
+  let &tabstop = a:size
+  let &softtabstop = 0
+  let &shiftwidth = a:size
+endfunction
+"" editorconfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+"" Initialize indentation
+call Spaces(2)
+"" Indents for specific filetypes
+if has('autocmd')
+  au FileType * call Spaces(2)
+  au FileType apiblueprint  call Spaces(4)
+  au FileType cpp           call Spaces(4)
+  au FileType java          call Spaces(4)
+  au FileType lua           call Spaces(4)
+  au FileType php           call Spaces(4)
+  au FileType python        call Spaces(4)
+  au FileType scala         call Spaces(4)
+  au FileType typescript    call Spaces(4)
+  au FileType xml           call Spaces(4)
+  au FileType bindzone          call Tabs(8)
+  au FileType c                 call Tabs(8)
+  au FileType gitconfig         call Tabs(8)
+  au FileType make              call Tabs(8)
+  au BufRead,BufNewFile *.plist call Tabs(8)
+  au FileType sudoers           call Tabs(8)
+  au FileType go call Tabs(4)
+endif
+
+""
+"" Keymap functions
+""
+
+function! s:MapHashrocket()
+  inoremap <C-l> <space>=><space>
+endfunction
+function! s:MapLeftArrow()
+  inoremap <C-l> <-
+endfunction
+function! s:MapRightArrow(spaces)
+  if a:spaces == 0
+    inoremap <C-l> ->
+  elseif a:spaces == 1
+    inoremap <C-l> <space>->
+  elseif a:spaces > 1
+    inoremap <C-l> <space>-><space>
+  endif
+endfunction
+"" Filetype-specific keymaps
+if has('autocmd')
+  au FileType php         call s:MapHashrocket()
+  au FileType ruby        call s:MapHashrocket()
+  au FileType eruby       call s:MapHashrocket()
+  au FileType haml        call s:MapHashrocket()
+  au FileType puppet      call s:MapHashrocket()
+  au FileType scala       call s:MapHashrocket()
+  au FileType javascript  call s:MapHashrocket()
+  au FileType typescript  call s:MapHashrocket()
+  au FileType go call s:MapLeftArrow()
+  au FileType c     call s:MapRightArrow(0)
+  au FileType cpp   call s:MapRightArrow(0)
+  au FileType objc  call s:MapRightArrow(0)
+  au FileType coffee call s:MapRightArrow(1)
+  au FileType java  call s:MapRightArrow(2)
+  au FileType rust  call s:MapRightArrow(2)
+  au FileType swift call s:MapRightArrow(2)
+endif
