@@ -160,10 +160,9 @@ set report=0 " Tell me how many lines commands change. Always.
 "set list listchars=tab:»·,trail:·,nbsp:·
 
 set fileformat=unix
-set ffs=unix,dos,mac " support all three file-format with unix no. 1
+set fileformats=unix,dos,mac " support all three file-format with unix no. 1
 set encoding=utf-8 " Force UTF-8 as default
 set termencoding=utf-8 " Also for terminals.
-set fileformats=unix
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
