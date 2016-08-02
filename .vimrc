@@ -276,18 +276,21 @@ set wildignore+=.imported_roles/**
 ""
 "" Default shell dialect
 let g:is_bash = 1
+
 "" Fix the filetype of certain misidentified shell scripts
 function! s:FixShellFt()
   if &filetype == '' || &filetype == 'conf'
     set filetype=sh
   endif
 endfunction
+
 "" Fix the filetype for things that look like nginx config
 function! s:FixNginxFt()
   if (&filetype == '' || &filetype == 'conf') && &filetype != 'yaml'
     set filetype=nginx
   endif
 endfunction
+
 "" Filetype corrections
 if has('autocmd')
   au BufRead,BufNewFile Fastfile     set filetype=ruby
@@ -325,6 +328,7 @@ let g:syntastic_quiet_messages = {'level': 'warnings'}
  
 "" Flip-flop buffers
 nnoremap <leader><leader> <C-^>
+
 "" Tab management
 nmap <silent> <leader>tc :<C-u>tabnew<cr>
 nmap <silent> <leader>tp :<C-u>tabprev<cr>
@@ -349,10 +353,13 @@ function! Tabs(size)
   let &softtabstop = 0
   let &shiftwidth = a:size
 endfunction
+
 "" editorconfig
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
+
 "" Initialize indentation
 call Spaces(2)
+
 "" Indents for specific filetypes
 if has('autocmd')
   au FileType * call Spaces(2)
@@ -377,13 +384,14 @@ endif
 ""
 "" Keymap functions
 ""
-
 function! s:MapHashrocket()
   inoremap <C-l> <space>=><space>
 endfunction
+
 function! s:MapLeftArrow()
   inoremap <C-l> <-
 endfunction
+
 function! s:MapRightArrow(spaces)
   if a:spaces == 0
     inoremap <C-l> ->
@@ -393,6 +401,7 @@ function! s:MapRightArrow(spaces)
     inoremap <C-l> <space>-><space>
   endif
 endfunction
+
 "" Filetype-specific keymaps
 if has('autocmd')
   au FileType php         call s:MapHashrocket()
