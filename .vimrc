@@ -34,6 +34,13 @@ set autoread
 
 " Cross platform solution to copy / paste using the system's clipboard
 set clipboard^=unnamed,unnamedplus
+" If for any reason the line above does not work or show some limitations,
+" look into doing the following:
+" map <leader>y "+y
+" map <leader>p "+p
+" map <leader>P "+P
+" map <leader>d "+d
+" more ?
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Events                                                                 "
