@@ -433,3 +433,7 @@ if has('autocmd')
   au FileType rust  call s:MapRightArrow(2)
   au FileType swift call s:MapRightArrow(2)
 endif
+
+if filereadable(".vimrc.local")
+    source .vimrc.local
+endif
