@@ -118,7 +118,8 @@ nnoremap <Leader>ev :vsplit ~\.vimrc<CR>   " split vertically and
 nnoremap <Leader>sv :source ~\.vimrc<CR>   " reload .vimrc 
 
 " Visual mode mappings 
-vnoremap < <gv vnoremap > >gv
+vnoremap < <gv
+vnoremap > >gv
 
 " Execute dot in the selection
 vnoremap . :norm.<CR>
