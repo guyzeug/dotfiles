@@ -434,6 +434,6 @@ if has('autocmd')
   au FileType swift call s:MapRightArrow(2)
 endif
 
-if filereadable(".vimrc.local")
-    source .vimrc.local
+if filereadable(glob("~/.vimrc.local")) 
+    source ~/.vimrc.local
 endif
