@@ -42,6 +42,50 @@ set clipboard^=unnamed,unnamedplus
 " map <leader>d "+d
 " more ?
 
+call plug#begin('~/.vim/plugged')
+" Add plugins to &runtimepath
+Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+call plug#end()
+
+"" Wildcards to ignore
+""
+"" Finder metadata
+set wildignore+=.DS_Store
+"" Source control
+set wildignore+=.git/**
+set wildignore+=.hg/**
+set wildignore+=.svn/**
+set wildignore+=.keep,.gitkeep,.hgkeep
+"" Temporary files
+set wildignore+=tmp/**
+set wildignore+=*.tmp
+"" ~/.vim
+set wildignore+=backup/**
+set wildignore+=undo/**
+"" Native objects/debug symbols/binaries
+set wildignore+=*.o,*.obj,*.dSYM,*.exe,*.app,*.ipa
+"" Java
+set wildignore+=target/**
+set wildignore+=*.class,*.jar
+"" IDEA
+set wildignore+=.idea/**
+"" Ruby
+set wildignore+=.bundle/**
+"" Python
+set wildignore+=*.pyc
+"" CocoaPods/Carthage
+set wildignore+=Pods/**
+set wildignore+=Carthage/**
+"" Common build directories
+set wildignore+=build/**
+set wildignore+=dist/**
+"" Go (projects built with gb)
+set wildignore+=vendor/src/**
+"" JavaScript
+set wildignore+=node_modules/**
+"" Ansible
+set wildignore+=.imported_roles/**
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Events                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -111,8 +155,8 @@ set nowrap                " don't wrap text
 let mapleader = "\<Space>"
 let maplocalleader = ","
 
-nnoremap <Leader>w :w<CR>
-nnoremap <Leader><Leader> V
+nnoremap ,w :w<CR>
+nnoremap ,<Leader> V
 nnoremap <Leader>ev :vsplit ~\.vimrc<CR>   " split vertically and
 " edit vimrc
 nnoremap <Leader>sv :source ~\.vimrc<CR>   " reload .vimrc 
@@ -123,6 +167,31 @@ vnoremap > >gv
 
 " Execute dot in the selection
 vnoremap . :norm.<CR>
+
+" Moving in buffers.
+nnoremap <C-S-tab> :bprev<CR>
+nnoremap <C-tab> :bnext<CR> 
+ 
+" Moving and resizing in windows.
+nnoremap + <C-W>+
+nnoremap _ <C-W>-
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+" close window
+nnoremap <leader>w <C-w>c
+ 
+" Moving in tabs
+noremap <c-right> gt
+noremap <c-left> gT
+ 
+"" Flip-flop buffers
+nnoremap <leader><leader> <C-^>
+
+" CtrlP keybindings
+nnoremap <leader>ff :CtrlP .<cr>
+nnoremap <leader>fj :execute ":CtrlP " . expand('%:p:h')<cr>
 
 " ------------------------------------------------
 " TO CONFIRM
@@ -191,98 +260,26 @@ set termencoding=utf-8 " Also for terminals.
 "autocmd BufReadPost quickfix nnoremap <CR> <CR>
 
 " set ttyfast                   " we have a fast terminal
+
+" Use Q for formatting the current paragraph (or selection)
+" vmap Q gq
+" nmap Q gqap
 " ------------------------------------------------
 
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 07. Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Ctrl-P settings.
-"let g:ctrlp_custom_ignore = { \ 'dir': '\.git$\|node_modules$\|\.hg$\|\.svn$', \ 'file': '\.exe$\|\.so$' \ }
-
-
-
-call plug#begin('~/.vim/plugged')
-" Add plugins to &runtimepath
-
-Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
-
-call plug#end()
-
-
-
-let g:ctrlp_max_files=0 " needed ?
-let g:ctrlp_max_depth=40 " needed ?
+"------------------------------------------------------------------------
+let g:ctrlp_max_files=0 " maximum number of files to scan (0 = no limit)
 let g:ctrlp_working_path_mode='' " apparently needed (tested on dev.php)
-
-
-" Use Q for formatting the current paragraph (or selection)
-vmap Q gq
-nmap Q gqap
-
- 
-" Moving in buffers.
-nnoremap <C-S-tab> :bprev<CR>
-nnoremap <C-tab> :bnext<CR> 
- 
-" Moving and resizing in windows.
-nnoremap + <C-W>+
-nnoremap _ <C-W>-
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <leader>w <C-w>c
- 
-" Moving in tabs
-noremap <c-right> gt
-noremap <c-left> gT
-nnoremap <leader>t :tabc<CR>
- 
-
- 
- 
- 
- 
- 
- 
- 
-"" Wildcards to ignore
-""
-"" Finder metadata
-set wildignore+=.DS_Store
-"" Source control
-set wildignore+=.git/**
-set wildignore+=.hg/**
-set wildignore+=.svn/**
-set wildignore+=.keep,.gitkeep,.hgkeep
-"" Temporary files
-set wildignore+=tmp/**
-set wildignore+=*.tmp
-"" ~/.vim
-set wildignore+=backup/**
-set wildignore+=undo/**
-"" Native objects/debug symbols/binaries
-set wildignore+=*.o,*.obj,*.dSYM,*.exe,*.app,*.ipa
-"" Java
-set wildignore+=target/**
-set wildignore+=*.class,*.jar
-"" IDEA
-set wildignore+=.idea/**
-"" Ruby
-set wildignore+=.bundle/**
-"" Python
-set wildignore+=*.pyc
-"" CocoaPods/Carthage
-set wildignore+=Pods/**
-set wildignore+=Carthage/**
-"" Common build directories
-set wildignore+=build/**
-set wildignore+=dist/**
-"" Go (projects built with gb)
-set wildignore+=vendor/src/**
-"" JavaScript
-set wildignore+=node_modules/**
-"" Ansible
-set wildignore+=.imported_roles/**
- 
+let g:ctrlp_open_new_file = 'r' " open new file in current window
+let g:ctrlp_match_window = 'results:100' " increase the number of suggestions. If this is to slow remove
+                                          " this line and when CtrlP is open use
+                                          "    Ctrl-D to switch between file / path mode
+                                          "    Ctrl-R to switch between regex / non regex mode
  
 ""
 "" Filetype/highlighting/colorscheme options
@@ -339,15 +336,7 @@ endif
 let g:syntastic_check_on_open = 1
 let g:syntastic_quiet_messages = {'level': 'warnings'}
  
-"" Flip-flop buffers
-nnoremap <leader><leader> <C-^>
 
-"" Tab management
-nmap <silent> <leader>tc :<C-u>tabnew<cr>
-nmap <silent> <leader>tp :<C-u>tabprev<cr>
-nmap <silent> <leader>tn :<C-u>tabnext<cr>
-nmap <silent> <leader>td :<C-u>tabclose<cr>
- 
 
 ""
 "" Indent options - default is 2 spaces
@@ -359,6 +348,7 @@ function! Spaces(num)
   let &softtabstop = 0
   let &shiftwidth = a:num
 endfunction
+
 function! Tabs(size)
   set noexpandtab
   set nosmarttab
