@@ -49,6 +49,8 @@ if has("gui_running")
     elseif has("gui_win32")
         set guifont=Consolas:h11:cANSI
     endif
+    set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
 else
     set guifont=Consolas:h11:cANSI
 endif
