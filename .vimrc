@@ -32,6 +32,9 @@ noremap Y y$
 " If a file is changed outside of vim, automatically reload it without asking
 set autoread
 
+" Cross platform solution to copy / paste using the system's clipboard
+set clipboard^=unnamed,unnamedplus
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Events                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
