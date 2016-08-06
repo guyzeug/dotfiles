@@ -42,9 +42,19 @@ set clipboard^=unnamed,unnamedplus
 " map <leader>d "+d
 " more ?
 
+" The following line forces vim-plug to run on 1 thread, as the parallel
+" install does not work at the moment on windows
+let g:plug_threads = 1
+
 call plug#begin('~/.vim/plugged')
 " Add plugins to &runtimepath
 Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+
+Plug 'https://github.com/junegunn/vim-easy-align'
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+Plug 'https://github.com/tpope/vim-commentary.git'
 call plug#end()
 
 "" Wildcards to ignore
@@ -281,62 +291,34 @@ let g:ctrlp_match_window = 'results:100' " increase the number of suggestions. I
                                           "    Ctrl-D to switch between file / path mode
                                           "    Ctrl-R to switch between regex / non regex mode
  
-""
-"" Filetype/highlighting/colorscheme options
-""
-"" Default shell dialect
-let g:is_bash = 1
-
-"" Fix the filetype of certain misidentified shell scripts
-function! s:FixShellFt()
-  if &filetype == '' || &filetype == 'conf'
-    set filetype=sh
-  endif
-endfunction
-
-"" Fix the filetype for things that look like nginx config
-function! s:FixNginxFt()
-  if (&filetype == '' || &filetype == 'conf') && &filetype != 'yaml'
-    set filetype=nginx
-  endif
-endfunction
-
-"" Filetype corrections
-if has('autocmd')
-  au BufRead,BufNewFile Fastfile     set filetype=ruby
-  au BufRead,BufNewFile *gemrc*      set filetype=yaml
-  au BufRead,BufNewFile *.gradle     set filetype=groovy
-  au BufRead,BufNewFile *.hjs        set filetype=handlebars
-  au BufRead,BufNewFile jquery.*.js  set filetype=javascript syntax=jquery
-  au BufRead,BufNewFile *.jquery.js  set filetype=javascript syntax=jquery
-  au BufRead,BufNewFile *.json       set filetype=javascript
-  au BufRead,BufNewFile *.mako       set filetype=mako
-  au BufRead,BufNewFile *.ru         set filetype=ruby
-  au BufRead,BufNewFile *.socket     set filetype=systemd
-  au BufRead,BufNewFile Procfile     set filetype=yaml
-  au BufRead,BufNewFile *env         call s:FixShellFt()
-  au BufRead,BufNewFile *.env.*      call s:FixShellFt()
-  au BufRead,BufNewFile *nginx*.conf call s:FixNginxFt()
-  au BufRead,BufNewFile */nginx/*    call s:FixNginxFt()
-  au BufRead,BufNewFile *profile     call s:FixShellFt()
-  au BufRead,BufNewFile *vimrc*      set filetype=vim
-  au BufRead,BufNewFile *rc          call s:FixShellFt()
-  au BufRead,BufNewFile *rc_*        call s:FixShellFt()
-  au BufRead,BufNewFile *.yml        set filetype=yaml
-  au BufRead,BufNewFile *.zsh*       set filetype=zsh
-  au FileType gitcommit setlocal spell
-  au FileType latex     setlocal spell
-  au FileType markdown  setlocal spell
-  au FileType plaintex  setlocal spell
-  au FileType text      setlocal spell
-endif
- 
+augroup vimrcFileTypes
+  " Clear all autocmds in the group
+  autocmd!
+  autocmd BufRead,BufNewFile Fastfile     set filetype=ruby
+  autocmd BufRead,BufNewFile *gemrc*      set filetype=yaml
+  autocmd BufRead,BufNewFile *.gradle     set filetype=groovy
+  autocmd BufRead,BufNewFile *.hjs        set filetype=handlebars
+  autocmd BufRead,BufNewFile jquery.*.js  set filetype=javascript syntax=jquery
+  autocmd BufRead,BufNewFile *.jquery.js  set filetype=javascript syntax=jquery
+  autocmd BufRead,BufNewFile *.json       set filetype=javascript
+  autocmd BufRead,BufNewFile *.mako       set filetype=mako
+  autocmd BufRead,BufNewFile *.ru         set filetype=ruby
+  autocmd BufRead,BufNewFile *.socket     set filetype=systemd
+  autocmd BufRead,BufNewFile Procfile     set filetype=yaml
+  autocmd BufRead,BufNewFile *vimrc*      set filetype=vim
+  autocmd BufRead,BufNewFile *.yml        set filetype=yaml
+  autocmd BufRead,BufNewFile *.zsh*       set filetype=zsh
+  autocmd FileType gitcommit setlocal spell
+  autocmd FileType latex     setlocal spell
+  autocmd FileType markdown  setlocal spell
+  autocmd FileType plaintex  setlocal spell
+  autocmd FileType text      setlocal spell
+augroup END
  
 "" Syntastic options
 let g:syntastic_check_on_open = 1
 let g:syntastic_quiet_messages = {'level': 'warnings'}
  
-
 
 ""
 "" Indent options - default is 2 spaces
@@ -363,26 +345,27 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 "" Initialize indentation
 call Spaces(2)
 
-"" Indents for specific filetypes
-if has('autocmd')
-  au FileType * call Spaces(2)
-  au FileType apiblueprint  call Spaces(4)
-  au FileType cpp           call Spaces(4)
-  au FileType java          call Spaces(4)
-  au FileType lua           call Spaces(4)
-  au FileType php           call Spaces(4)
-  au FileType python        call Spaces(4)
-  au FileType scala         call Spaces(4)
-  au FileType typescript    call Spaces(4)
-  au FileType xml           call Spaces(4)
-  au FileType bindzone          call Tabs(8)
-  au FileType c                 call Tabs(8)
-  au FileType gitconfig         call Tabs(8)
-  au FileType make              call Tabs(8)
-  au BufRead,BufNewFile *.plist call Tabs(8)
-  au FileType sudoers           call Tabs(8)
-  au FileType go call Tabs(4)
-endif
+augroup vimrcSpacesAndTabs
+  " Clear all autocmds in the group
+  autocmd!
+  autocmd FileType * call Spaces(2)
+  autocmd FileType apiblueprint  call Spaces(4)
+  autocmd FileType cpp           call Spaces(4)
+  autocmd FileType java          call Spaces(4)
+  autocmd FileType lua           call Spaces(4)
+  autocmd FileType php           call Spaces(4)
+  autocmd FileType python        call Spaces(4)
+  autocmd FileType scala         call Spaces(4)
+  autocmd FileType typescript    call Spaces(4)
+  autocmd FileType xml           call Spaces(4)
+  autocmd FileType bindzone          call Tabs(8)
+  autocmd FileType c                 call Tabs(8)
+  autocmd FileType gitconfig         call Tabs(8)
+  autocmd FileType make              call Tabs(8)
+  autocmd BufRead,BufNewFile *.plist call Tabs(8)
+  autocmd FileType sudoers           call Tabs(8)
+  autocmd FileType go call Tabs(4)
+augroup END
 
 ""
 "" Keymap functions
@@ -405,25 +388,26 @@ function! s:MapRightArrow(spaces)
   endif
 endfunction
 
-"" Filetype-specific keymaps
-if has('autocmd')
-  au FileType php         call s:MapHashrocket()
-  au FileType ruby        call s:MapHashrocket()
-  au FileType eruby       call s:MapHashrocket()
-  au FileType haml        call s:MapHashrocket()
-  au FileType puppet      call s:MapHashrocket()
-  au FileType scala       call s:MapHashrocket()
-  au FileType javascript  call s:MapHashrocket()
-  au FileType typescript  call s:MapHashrocket()
-  au FileType go call s:MapLeftArrow()
-  au FileType c     call s:MapRightArrow(0)
-  au FileType cpp   call s:MapRightArrow(0)
-  au FileType objc  call s:MapRightArrow(0)
-  au FileType coffee call s:MapRightArrow(1)
-  au FileType java  call s:MapRightArrow(2)
-  au FileType rust  call s:MapRightArrow(2)
-  au FileType swift call s:MapRightArrow(2)
-endif
+augroup vimrcArrow
+  " Clear all autocmds in the group
+  autocmd!
+  autocmd FileType php         call s:MapHashrocket()
+  autocmd FileType ruby        call s:MapHashrocket()
+  autocmd FileType eruby       call s:MapHashrocket()
+  autocmd FileType haml        call s:MapHashrocket()
+  autocmd FileType puppet      call s:MapHashrocket()
+  autocmd FileType scala       call s:MapHashrocket()
+  autocmd FileType javascript  call s:MapHashrocket()
+  autocmd FileType typescript  call s:MapHashrocket()
+  autocmd FileType go call s:MapLeftArrow()
+  autocmd FileType c     call s:MapRightArrow(0)
+  autocmd FileType cpp   call s:MapRightArrow(0)
+  autocmd FileType objc  call s:MapRightArrow(0)
+  autocmd FileType coffee call s:MapRightArrow(1)
+  autocmd FileType java  call s:MapRightArrow(2)
+  autocmd FileType rust  call s:MapRightArrow(2)
+  autocmd FileType swift call s:MapRightArrow(2)
+augroup END
 
 if filereadable(glob("~/.vimrc.local")) 
     source ~/.vimrc.local
