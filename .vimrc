@@ -55,6 +55,13 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 Plug 'https://github.com/tpope/vim-commentary.git'
+Plug 'scrooloose/nerdtree'
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+nnoremap <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Show the bookmarks table on startup
+let NERDTreeShowBookmarks=1
+
 call plug#end()
 
 "" Wildcards to ignore
@@ -165,11 +172,11 @@ set nowrap                " don't wrap text
 let mapleader = "\<Space>"
 let maplocalleader = ","
 
-nnoremap ,w :w<CR>
+nnoremap ,w :update<CR>
 nnoremap ,<Leader> V
-nnoremap <Leader>ev :vsplit ~\.vimrc<CR>   " split vertically and
+"nnoremap <Leader>ev :vsplit ~/.vimrc<CR>   " split vertically and
 " edit vimrc
-nnoremap <Leader>sv :source ~\.vimrc<CR>   " reload .vimrc 
+"nnoremap <Leader>sv :source ~/.vimrc<CR>   " reload .vimrc 
 
 " Visual mode mappings 
 vnoremap < <gv
@@ -294,25 +301,25 @@ let g:ctrlp_match_window = 'results:100' " increase the number of suggestions. I
 augroup vimrcFileTypes
   " Clear all autocmds in the group
   autocmd!
-  autocmd BufRead,BufNewFile Fastfile     set filetype=ruby
-  autocmd BufRead,BufNewFile *gemrc*      set filetype=yaml
-  autocmd BufRead,BufNewFile *.gradle     set filetype=groovy
-  autocmd BufRead,BufNewFile *.hjs        set filetype=handlebars
-  autocmd BufRead,BufNewFile jquery.*.js  set filetype=javascript syntax=jquery
-  autocmd BufRead,BufNewFile *.jquery.js  set filetype=javascript syntax=jquery
-  autocmd BufRead,BufNewFile *.json       set filetype=javascript
-  autocmd BufRead,BufNewFile *.mako       set filetype=mako
-  autocmd BufRead,BufNewFile *.ru         set filetype=ruby
-  autocmd BufRead,BufNewFile *.socket     set filetype=systemd
-  autocmd BufRead,BufNewFile Procfile     set filetype=yaml
-  autocmd BufRead,BufNewFile *vimrc*      set filetype=vim
-  autocmd BufRead,BufNewFile *.yml        set filetype=yaml
-  autocmd BufRead,BufNewFile *.zsh*       set filetype=zsh
-  autocmd FileType gitcommit setlocal spell
-  autocmd FileType latex     setlocal spell
-  autocmd FileType markdown  setlocal spell
-  autocmd FileType plaintex  setlocal spell
-  autocmd FileType text      setlocal spell
+  autocmd BufRead,BufNewFile Fastfile    set      filetype=ruby
+  autocmd BufRead,BufNewFile *gemrc*     set      filetype=yaml
+  autocmd BufRead,BufNewFile *.gradle    set      filetype=groovy
+  autocmd BufRead,BufNewFile *.hjs       set      filetype=handlebars
+  autocmd BufRead,BufNewFile jquery.*.js set      filetype=javascript syntax=jquery
+  autocmd BufRead,BufNewFile *.jquery.js set      filetype=javascript syntax=jquery
+  autocmd BufRead,BufNewFile *.json      set      filetype=javascript
+  autocmd BufRead,BufNewFile *.mako      set      filetype=mako
+  autocmd BufRead,BufNewFile *.ru        set      filetype=ruby
+  autocmd BufRead,BufNewFile *.socket    set      filetype=systemd
+  autocmd BufRead,BufNewFile Procfile    set      filetype=yaml
+  autocmd BufRead,BufNewFile *vimrc*     set      filetype=vim
+  autocmd BufRead,BufNewFile *.yml       set      filetype=yaml
+  autocmd BufRead,BufNewFile *.zsh*      set      filetype=zsh
+  autocmd FileType           gitcommit   setlocal spell
+  autocmd FileType           latex       setlocal spell
+  autocmd FileType           markdown    setlocal spell
+  autocmd FileType           plaintex    setlocal spell
+  autocmd FileType           text        setlocal spell
 augroup END
  
 "" Syntastic options
@@ -348,23 +355,23 @@ call Spaces(2)
 augroup vimrcSpacesAndTabs
   " Clear all autocmds in the group
   autocmd!
-  autocmd FileType * call Spaces(2)
-  autocmd FileType apiblueprint  call Spaces(4)
-  autocmd FileType cpp           call Spaces(4)
-  autocmd FileType java          call Spaces(4)
-  autocmd FileType lua           call Spaces(4)
-  autocmd FileType php           call Spaces(4)
-  autocmd FileType python        call Spaces(4)
-  autocmd FileType scala         call Spaces(4)
-  autocmd FileType typescript    call Spaces(4)
-  autocmd FileType xml           call Spaces(4)
-  autocmd FileType bindzone          call Tabs(8)
-  autocmd FileType c                 call Tabs(8)
-  autocmd FileType gitconfig         call Tabs(8)
-  autocmd FileType make              call Tabs(8)
-  autocmd BufRead,BufNewFile *.plist call Tabs(8)
-  autocmd FileType sudoers           call Tabs(8)
-  autocmd FileType go call Tabs(4)
+  autocmd FileType           *            call Spaces(2)
+  autocmd FileType           apiblueprint call Spaces(4)
+  autocmd FileType           cpp          call Spaces(4)
+  autocmd FileType           java         call Spaces(4)
+  autocmd FileType           lua          call Spaces(4)
+  autocmd FileType           php          call Spaces(4)
+  autocmd FileType           python       call Spaces(4)
+  autocmd FileType           scala        call Spaces(4)
+  autocmd FileType           typescript   call Spaces(4)
+  autocmd FileType           xml          call Spaces(4)
+  autocmd FileType           bindzone     call Tabs(8)
+  autocmd FileType           c            call Tabs(8)
+  autocmd FileType           gitconfig    call Tabs(8)
+  autocmd FileType           make         call Tabs(8)
+  autocmd BufRead,BufNewFile *.plist      call Tabs(8)
+  autocmd FileType           sudoers      call Tabs(8)
+  autocmd FileType           go           call Tabs(4)
 augroup END
 
 ""
@@ -391,23 +398,40 @@ endfunction
 augroup vimrcArrow
   " Clear all autocmds in the group
   autocmd!
-  autocmd FileType php         call s:MapHashrocket()
-  autocmd FileType ruby        call s:MapHashrocket()
-  autocmd FileType eruby       call s:MapHashrocket()
-  autocmd FileType haml        call s:MapHashrocket()
-  autocmd FileType puppet      call s:MapHashrocket()
-  autocmd FileType scala       call s:MapHashrocket()
-  autocmd FileType javascript  call s:MapHashrocket()
-  autocmd FileType typescript  call s:MapHashrocket()
-  autocmd FileType go call s:MapLeftArrow()
-  autocmd FileType c     call s:MapRightArrow(0)
-  autocmd FileType cpp   call s:MapRightArrow(0)
-  autocmd FileType objc  call s:MapRightArrow(0)
-  autocmd FileType coffee call s:MapRightArrow(1)
-  autocmd FileType java  call s:MapRightArrow(2)
-  autocmd FileType rust  call s:MapRightArrow(2)
-  autocmd FileType swift call s:MapRightArrow(2)
+  autocmd FileType php        call s:MapHashrocket()
+  autocmd FileType ruby       call s:MapHashrocket()
+  autocmd FileType eruby      call s:MapHashrocket()
+  autocmd FileType haml       call s:MapHashrocket()
+  autocmd FileType puppet     call s:MapHashrocket()
+  autocmd FileType scala      call s:MapHashrocket()
+  autocmd FileType javascript call s:MapHashrocket()
+  autocmd FileType typescript call s:MapHashrocket()
+  autocmd FileType go         call s:MapLeftArrow()
+  autocmd FileType c          call s:MapRightArrow(0)
+  autocmd FileType cpp        call s:MapRightArrow(0)
+  autocmd FileType objc       call s:MapRightArrow(0)
+  autocmd FileType coffee     call s:MapRightArrow(1)
+  autocmd FileType java       call s:MapRightArrow(2)
+  autocmd FileType rust       call s:MapRightArrow(2)
+  autocmd FileType swift      call s:MapRightArrow(2)
 augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+" Taken from: https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L90
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
 
 if filereadable(glob("~/.vimrc.local")) 
     source ~/.vimrc.local
