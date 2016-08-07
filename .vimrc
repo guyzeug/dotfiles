@@ -28,7 +28,7 @@ map <right> <nop>
 
 " The way it should have been.
 noremap Y y$
- 
+
 " If a file is changed outside of vim, automatically reload it without asking
 set autoread
 
@@ -61,6 +61,14 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Show the bookmarks table on startup
 let NERDTreeShowBookmarks=1
+let NERDTreeShowHidden=1
+
+" Press v over and over again to expand selection
+Plug 'terryma/vim-expand-region'
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+Plug 'git://github.com/jiangmiao/auto-pairs.git'
 
 call plug#end()
 
@@ -176,9 +184,9 @@ nnoremap ,w :update<CR>
 nnoremap ,<Leader> V
 "nnoremap <Leader>ev :vsplit ~/.vimrc<CR>   " split vertically and
 " edit vimrc
-"nnoremap <Leader>sv :source ~/.vimrc<CR>   " reload .vimrc 
+"nnoremap <Leader>sv :source ~/.vimrc<CR>   " reload .vimrc
 
-" Visual mode mappings 
+" Visual mode mappings
 vnoremap < <gv
 vnoremap > >gv
 
@@ -187,8 +195,8 @@ vnoremap . :norm.<CR>
 
 " Moving in buffers.
 nnoremap <C-S-tab> :bprev<CR>
-nnoremap <C-tab> :bnext<CR> 
- 
+nnoremap <C-tab> :bnext<CR>
+
 " Moving and resizing in windows.
 nnoremap + <C-W>+
 nnoremap _ <C-W>-
@@ -198,11 +206,11 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 " close window
 nnoremap <leader>w <C-w>c
- 
+
 " Moving in tabs
 noremap <c-right> gt
 noremap <c-left> gT
- 
+
 "" Flip-flop buffers
 nnoremap <leader><leader> <C-^>
 
@@ -297,7 +305,7 @@ let g:ctrlp_match_window = 'results:100' " increase the number of suggestions. I
                                           " this line and when CtrlP is open use
                                           "    Ctrl-D to switch between file / path mode
                                           "    Ctrl-R to switch between regex / non regex mode
- 
+
 augroup vimrcFileTypes
   " Clear all autocmds in the group
   autocmd!
@@ -321,11 +329,18 @@ augroup vimrcFileTypes
   autocmd FileType           plaintex    setlocal spell
   autocmd FileType           text        setlocal spell
 augroup END
- 
+
+augroup vimrcWhiteSpaces
+  " Clear all autocmds in the group
+  autocmd!
+  " Delete trailing spaces on save
+  autocmd BufWritePre * :%s/\s\+$//e
+augroup END
+
 "" Syntastic options
 let g:syntastic_check_on_open = 1
 let g:syntastic_quiet_messages = {'level': 'warnings'}
- 
+
 
 ""
 "" Indent options - default is 2 spaces
@@ -433,6 +448,6 @@ endfunction
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
 
-if filereadable(glob("~/.vimrc.local")) 
+if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
