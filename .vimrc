@@ -71,7 +71,7 @@ vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
 Plug 'jiangmiao/auto-pairs'
-
+Plug 'tpope/vim-surround'
 call plug#end()
 
 "" Wildcards to ignore
