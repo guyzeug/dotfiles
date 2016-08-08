@@ -68,7 +68,7 @@ Plug 'terryma/vim-expand-region'
 vmap v <Plug>(expand_region_expand)
 vmap <C-v> <Plug>(expand_region_shrink)
 
-Plug 'git://github.com/jiangmiao/auto-pairs.git'
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
