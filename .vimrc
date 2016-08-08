@@ -42,6 +42,8 @@ set clipboard^=unnamed,unnamedplus
 " map <leader>d "+d
 " more ?
 
+set matchpairs+=<:>
+
 " The following line forces vim-plug to run on 1 thread, as the parallel
 " install does not work at the moment on windows
 let g:plug_threads = 1
@@ -451,3 +453,8 @@ inoremap <s-tab> <c-n>
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
+
+" Add support for <> in vim-expand-region
+call expand_region#custom_text_objects({
+      \ 'i>' :1,
+      \ })
