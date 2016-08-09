@@ -72,6 +72,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
+Plug 'itchyny/lightline.vim'
 call plug#end()
 
 "" Wildcards to ignore
@@ -228,7 +229,8 @@ set lines=35 columns=150
 " :nohlsearch<return><esc> nnoremap <silent> <leader>, :noh<cr> " Stop
 " highlight after searching
 
-set showmode
+" Set noshowmode because the mode information is displayed via lightline
+set noshowmode
 
 " apparently this is how to avoid automatic line breaks when typing long lines
 set textwidth=0
