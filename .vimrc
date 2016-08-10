@@ -73,6 +73,7 @@ vmap <C-v> <Plug>(expand_region_shrink)
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
+Plug 'bling/vim-bufferline'
 call plug#end()
 
 "" Wildcards to ignore
