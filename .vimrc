@@ -34,6 +34,10 @@ set autoread
 
 " Cross platform solution to copy / paste using the system's clipboard
 set clipboard^=unnamed,unnamedplus
+
+" Sane backspace
+set backspace=indent,eol,start
+
 " If for any reason the line above does not work or show some limitations,
 " look into doing the following:
 " map <leader>y "+y
@@ -464,6 +468,7 @@ call expand_region#custom_text_objects({
 
 let g:buftabline_indicators=1
 let g:buftabline_numbers=1
+
 nmap <leader>1 <Plug>BufTabLine.Go(1)
 nmap <leader>2 <Plug>BufTabLine.Go(2)
 nmap <leader>3 <Plug>BufTabLine.Go(3)
@@ -474,3 +479,13 @@ nmap <leader>7 <Plug>BufTabLine.Go(7)
 nmap <leader>8 <Plug>BufTabLine.Go(8)
 nmap <leader>9 <Plug>BufTabLine.Go(9)
 nmap <leader>0 <Plug>BufTabLine.Go(10)
+
+" Custom group             Default link      Meaning
+" *BufTabLineCurrent*        |TabLineSel|        Buffer shown in current window
+" *BufTabLineActive*         |PmenuSel|          Buffer shown in other window
+" *BufTabLineHidden*         |TabLine|           Buffer not currently visible
+" *BufTabLineFill*           |TabLineFill|       Empty area
+hi! BufTabLineCurrent term=bold cterm=bold gui=bold guifg=peru
+hi! BufTabLineFill guibg=slategrey
+hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
+hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
