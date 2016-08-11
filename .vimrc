@@ -77,6 +77,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 "" Wildcards to ignore
@@ -488,3 +489,5 @@ hi! BufTabLineCurrent term=bold cterm=bold gui=bold guifg=peru
 hi! BufTabLineFill guibg=slategrey
 hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
 hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
+
+let g:user_emmet_leader_key='hh'
