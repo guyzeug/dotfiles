@@ -87,10 +87,12 @@ set wildignore+=node_modules/**
 "" Ansible
 set wildignore+=.imported_roles/**
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 02. Events                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 03. Theme/Colors                                                           "
@@ -114,6 +116,7 @@ set t_Co=256              " enable 256-color mode
 syntax enable             " enable syntax highlighting (previously syntax on)
 colorscheme desert        " set colorscheme
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Vim UI                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -130,12 +133,14 @@ set noshowmatch           " Don't jump cursor to matching brace
 set cmdheight=1
 set scrolloff=5           " always show me the next/previous 5 lines
 set showcmd               " display incomplete command
-
+set lines=50 columns=160
+set noshowmode            " the mode information is displayed via lightline
 set equalalways           " Multiple windows, when created, are equal in size"
 set splitbelow splitright " Put the new windows to the right/bottom"
 
 " Don't update the display while executing macros
 set lazyredraw
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 05. Text Formatting/Layout                                                 "
@@ -150,6 +155,7 @@ set expandtab             " use spaces instead of tabs
 "set smarttab              " use tabs at the start of a line, spaces elsewhere
 set nowrap                " don't wrap text
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -158,9 +164,10 @@ let maplocalleader = ","
 
 nnoremap ,w :update<CR>
 nnoremap ,<Leader> V
-"nnoremap <Leader>ev :vsplit ~/.vimrc<CR>   " split vertically and
-" edit vimrc
-"nnoremap <Leader>sv :source ~/.vimrc<CR>   " reload .vimrc
+" split vertically and edit vimrc
+nnoremap <Leader>ev :vsplit ~/dotfiles/.vimrc<CR>
+" reload .vimrc
+nnoremap <Leader>sv :source ~/dotfiles/.vimrc<CR>
 
 " Visual mode mappings
 vnoremap < <gv
@@ -196,14 +203,10 @@ nnoremap <leader>fj :execute ":CtrlP " . expand('%:p:h')<cr>
 
 " ------------------------------------------------
 " TO CONFIRM
-set lines=35 columns=150
 
 " Clear highlight search results with <esc> nnoremap <esc>
 " :nohlsearch<return><esc> nnoremap <silent> <leader>, :noh<cr> " Stop
 " highlight after searching
-
-" Set noshowmode because the mode information is displayed via lightline
-set noshowmode
 
 " apparently this is how to avoid automatic line breaks when typing long lines
 set textwidth=0
@@ -235,19 +238,6 @@ set fileformat=unix
 set fileformats=unix,dos,mac " support all three file-format with unix no. 1
 set encoding=utf-8 " Force UTF-8 as default
 set termencoding=utf-8 " Also for terminals.
-
-" Search mappings: These will make it so that going to the next one in a
-" search will center on the line it's found in.
-" GLG => initial feedback is that it can be visually annoying
-"map N Nzz
-"map n nzz
-
-" Taken from: https://github.com/colbycheeze/dotfiles/blob/master/vimrc
-" Use enter to create new lines w/o entering insert mode
-"nnoremap <CR> o<Esc>
-" Below is to fix issues with the ABOVE mappings in quickfix window
-"autocmd CmdwinEnter * nnoremap <CR> <CR>
-"autocmd BufReadPost quickfix nnoremap <CR> <CR>
 
 " set ttyfast                   " we have a fast terminal
 
@@ -346,6 +336,11 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 08. Autocommands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 augroup vimrcFileTypes
   " Clear all autocmds in the group
   autocmd!
@@ -370,10 +365,13 @@ augroup vimrcFileTypes
   autocmd FileType           text        setlocal spell
 augroup END
 
+
+""
+"" Remove trailing whitespaces on save
+""
 augroup vimrcWhiteSpaces
   " Clear all autocmds in the group
   autocmd!
-  " Delete trailing spaces on save
   autocmd BufWritePre * :%s/\s\+$//e
 augroup END
 
@@ -480,6 +478,11 @@ endfunction
 
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 08. Autocommands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
