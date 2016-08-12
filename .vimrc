@@ -215,6 +215,7 @@ Plug 'ap/vim-buftabline'
 Plug 'mattn/emmet-vim'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-sensible'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " Ctrl-P settings.
@@ -289,20 +290,6 @@ let g:syntastic_check_on_wq = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup vimrcFileTypes
   autocmd!
-  autocmd BufRead,BufNewFile Fastfile    set      filetype=ruby
-  autocmd BufRead,BufNewFile *gemrc*     set      filetype=yaml
-  autocmd BufRead,BufNewFile *.gradle    set      filetype=groovy
-  autocmd BufRead,BufNewFile *.hjs       set      filetype=handlebars
-  autocmd BufRead,BufNewFile jquery.*.js set      filetype=javascript syntax=jquery
-  autocmd BufRead,BufNewFile *.jquery.js set      filetype=javascript syntax=jquery
-  autocmd BufRead,BufNewFile *.json      set      filetype=javascript
-  autocmd BufRead,BufNewFile *.mako      set      filetype=mako
-  autocmd BufRead,BufNewFile *.ru        set      filetype=ruby
-  autocmd BufRead,BufNewFile *.socket    set      filetype=systemd
-  autocmd BufRead,BufNewFile Procfile    set      filetype=yaml
-  autocmd BufRead,BufNewFile *vimrc*     set      filetype=vim
-  autocmd BufRead,BufNewFile *.yml       set      filetype=yaml
-  autocmd BufRead,BufNewFile *.zsh*      set      filetype=zsh
   autocmd FileType           gitcommit   setlocal spell
   autocmd FileType           latex       setlocal spell
   autocmd FileType           markdown    setlocal spell
@@ -310,55 +297,11 @@ augroup vimrcFileTypes
   autocmd FileType           text        setlocal spell
 augroup END
 
-
 " Remove trailing whitespaces on save
 augroup vimrcWhiteSpaces
   autocmd!
   autocmd BufWritePre * :%s/\s\+$//e
 augroup END
-
-
-" Indent options - default is 2 spaces
-function! Spaces(num)
-  set expandtab
-  set smarttab
-  let &tabstop = a:num
-  let &softtabstop = 0
-  let &shiftwidth = a:num
-endfunction
-
-"" Initialize indentation
-call Spaces(2)
-
-function! Tabs(size)
-  set noexpandtab
-  set nosmarttab
-  let &tabstop = a:size
-  let &softtabstop = 0
-  let &shiftwidth = a:size
-endfunction
-
-augroup vimrcSpacesAndTabs
-  autocmd!
-  autocmd FileType           *            call Spaces(2)
-  autocmd FileType           apiblueprint call Spaces(4)
-  autocmd FileType           cpp          call Spaces(4)
-  autocmd FileType           java         call Spaces(4)
-  autocmd FileType           lua          call Spaces(4)
-  autocmd FileType           php          call Spaces(4)
-  autocmd FileType           python       call Spaces(4)
-  autocmd FileType           scala        call Spaces(4)
-  autocmd FileType           typescript   call Spaces(4)
-  autocmd FileType           xml          call Spaces(4)
-  autocmd FileType           bindzone     call Tabs(8)
-  autocmd FileType           c            call Tabs(8)
-  autocmd FileType           gitconfig    call Tabs(8)
-  autocmd FileType           make         call Tabs(8)
-  autocmd BufRead,BufNewFile *.plist      call Tabs(8)
-  autocmd FileType           sudoers      call Tabs(8)
-  autocmd FileType           go           call Tabs(4)
-augroup END
-
 
 " Keymap functions
 function! s:MapHashrocket()
@@ -399,8 +342,6 @@ augroup vimrcArrow
   autocmd FileType swift      call s:MapRightArrow(2)
 augroup END
 
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
 " Indent if we're at the beginning of a line. Else, do completion.
 " Taken from: https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L90
