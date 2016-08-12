@@ -134,6 +134,7 @@ set splitbelow splitright " Put the new windows to the right/bottom"
 set lazyredraw            " Don't update the display while executing macros
 set report=0              " Tell me how many lines commands change. Always.
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Text Formatting/Layout                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -142,7 +143,6 @@ set softtabstop=4         " unify
 set shiftwidth=4          " indent/outdent by 4 columns
 set shiftround            " always indent/outdent to the nearest tabstop
 set expandtab             " use spaces instead of tabs
-"set smartindent           " automatically insert one extra level of indentation
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -194,16 +194,15 @@ nnoremap <leader>fj :execute ":CtrlP " . expand('%:p:h')<cr>
 vmap Q gq
 nmap Q gqap
 
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " The following line forces vim-plug to run on 1 thread, as the parallel
 " install does not work at the moment on windows
 let g:plug_threads = 1
 
 call plug#begin('~/.vim/plugged')
-" Add plugins to &runtimepath
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-commentary'
@@ -268,10 +267,10 @@ nmap <leader>9 <Plug>BufTabLine.Go(9)
 nmap <leader>0 <Plug>BufTabLine.Go(10)
 
 " Custom group             Default link      Meaning
-" *BufTabLineCurrent*        |TabLineSel|        Buffer shown in current window
-" *BufTabLineActive*         |PmenuSel|          Buffer shown in other window
-" *BufTabLineHidden*         |TabLine|           Buffer not currently visible
-" *BufTabLineFill*           |TabLineFill|       Empty area
+" *BufTabLineCurrent*      |TabLineSel|        Buffer shown in current window
+" *BufTabLineActive*       |PmenuSel|          Buffer shown in other window
+" *BufTabLineHidden*       |TabLine|           Buffer not currently visible
+" *BufTabLineFill*         |TabLineFill|       Empty area
 hi! BufTabLineCurrent term=bold cterm=bold gui=bold guifg=peru
 hi! BufTabLineFill guibg=slategrey
 hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
@@ -288,9 +287,7 @@ let g:syntastic_check_on_wq = 0
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 09. Autocommands
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 augroup vimrcFileTypes
-  " Clear all autocmds in the group
   autocmd!
   autocmd BufRead,BufNewFile Fastfile    set      filetype=ruby
   autocmd BufRead,BufNewFile *gemrc*     set      filetype=yaml
@@ -314,19 +311,14 @@ augroup vimrcFileTypes
 augroup END
 
 
-""
-"" Remove trailing whitespaces on save
-""
+" Remove trailing whitespaces on save
 augroup vimrcWhiteSpaces
-  " Clear all autocmds in the group
   autocmd!
   autocmd BufWritePre * :%s/\s\+$//e
 augroup END
 
 
-""
-"" Indent options - default is 2 spaces
-""
+" Indent options - default is 2 spaces
 function! Spaces(num)
   set expandtab
   set smarttab
@@ -334,6 +326,9 @@ function! Spaces(num)
   let &softtabstop = 0
   let &shiftwidth = a:num
 endfunction
+
+"" Initialize indentation
+call Spaces(2)
 
 function! Tabs(size)
   set noexpandtab
@@ -343,11 +338,7 @@ function! Tabs(size)
   let &shiftwidth = a:size
 endfunction
 
-"" Initialize indentation
-call Spaces(2)
-
 augroup vimrcSpacesAndTabs
-  " Clear all autocmds in the group
   autocmd!
   autocmd FileType           *            call Spaces(2)
   autocmd FileType           apiblueprint call Spaces(4)
@@ -368,9 +359,8 @@ augroup vimrcSpacesAndTabs
   autocmd FileType           go           call Tabs(4)
 augroup END
 
-""
-"" Keymap functions
-""
+
+" Keymap functions
 function! s:MapHashrocket()
   inoremap <C-l> <space>=><space>
 endfunction
@@ -390,7 +380,6 @@ function! s:MapRightArrow(spaces)
 endfunction
 
 augroup vimrcArrow
-  " Clear all autocmds in the group
   autocmd!
   autocmd FileType php        call s:MapHashrocket()
   autocmd FileType ruby       call s:MapHashrocket()
@@ -409,6 +398,7 @@ augroup vimrcArrow
   autocmd FileType rust       call s:MapRightArrow(2)
   autocmd FileType swift      call s:MapRightArrow(2)
 augroup END
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MULTIPURPOSE TAB KEY
@@ -429,7 +419,7 @@ inoremap <s-tab> <c-n>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 08. Autocommands
+" 09. Local settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if filereadable(glob("~/.vimrc.local"))
