@@ -29,14 +29,11 @@ map <right> <nop>
 " The way it should have been.
 noremap Y y$
 
-" If a file is changed outside of vim, automatically reload it without asking
-set autoread
-
 " Cross platform solution to copy / paste using the system's clipboard
 set clipboard^=unnamed,unnamedplus
 
-" Sane backspace
-set backspace=indent,eol,start
+set wildmode=list:longest,full
+set hidden
 
 " If for any reason the line above does not work or show some limitations,
 " look into doing the following:
@@ -89,13 +86,7 @@ set wildignore+=.imported_roles/**
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 02. Events                                                                 "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-filetype plugin indent on " filetype detection[ON] plugin[ON] indent[ON]
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 03. Theme/Colors                                                           "
+" 02. Theme/Colors                                                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set the font depending on the client
 if has("gui_running")
@@ -112,23 +103,18 @@ else
     set guifont=Consolas:h11:cANSI
 endif
 
-set t_Co=256              " enable 256-color mode
-syntax enable             " enable syntax highlighting (previously syntax on)
 colorscheme desert        " set colorscheme
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 04. Vim UI                                                                 "
+" 03. Vim UI                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set number                " show line numbers
 set relativenumber        " show relative numbers
 set nocursorline          " do not highlight current line (it can make redrawing window slow)
-set laststatus=2          " last window always has a statusline
 set hlsearch              " highlight all search matches
-set incsearch             " But do highlight as you type your search
 set ignorecase smartcase  " make searches case-sensitive only if they contain upper-case characters
 set gdefault              " Never have to type /g at the end of search / replace again
-set ruler                 " Always show info along bottom
 set noshowmatch           " Don't jump cursor to matching brace
 set cmdheight=1
 set scrolloff=5           " always show me the next/previous 5 lines
@@ -137,27 +123,23 @@ set lines=50 columns=160
 set noshowmode            " the mode information is displayed via lightline
 set equalalways           " Multiple windows, when created, are equal in size"
 set splitbelow splitright " Put the new windows to the right/bottom"
-
-" Don't update the display while executing macros
-set lazyredraw
+set lazyredraw            " Don't update the display while executing macros
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 05. Text Formatting/Layout                                                 "
+" 04. Text Formatting/Layout                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set autoindent            " auto-indent
 set tabstop=4             " tab spacing
 set softtabstop=4         " unify
 set shiftwidth=4          " indent/outdent by 4 columns
 set shiftround            " always indent/outdent to the nearest tabstop
 set expandtab             " use spaces instead of tabs
-"set smartindent           " automatically insert one extra level ofi ndentation
-"set smarttab              " use tabs at the start of a line, spaces elsewhere
+"set smartindent           " automatically insert one extra level of indentation
 set nowrap                " don't wrap text
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 06. Key Bindings
+" 05. Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = "\<Space>"
 let maplocalleader = ","
@@ -204,22 +186,10 @@ nnoremap <leader>fj :execute ":CtrlP " . expand('%:p:h')<cr>
 " ------------------------------------------------
 " TO CONFIRM
 
-" Clear highlight search results with <esc> nnoremap <esc>
-" :nohlsearch<return><esc> nnoremap <silent> <leader>, :noh<cr> " Stop
-" highlight after searching
-
 " apparently this is how to avoid automatic line breaks when typing long lines
 set textwidth=0
 set wrapmargin=0
 
-" make tab completion for files/buffers act like bash
-set wildmenu
-" use emacs-style tab completion when selecting files, etc
-set wildmode=longest,list
-" or
-set wildmode=list:longest,full
-" allow unsaved background buffers and remember marks/undo for them
-set hidden
 
 " move vertically by visual line
 "nnoremap j gj
@@ -236,7 +206,7 @@ set report=0 " Tell me how many lines commands change. Always.
 
 set fileformat=unix
 set fileformats=unix,dos,mac " support all three file-format with unix no. 1
-set encoding=utf-8 " Force UTF-8 as default
+"set encoding=utf-8 " Force UTF-8 as default
 set termencoding=utf-8 " Also for terminals.
 
 " set ttyfast                   " we have a fast terminal
@@ -248,7 +218,7 @@ set termencoding=utf-8 " Also for terminals.
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 07. Plugins
+" 06. Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " The following line forces vim-plug to run on 1 thread, as the parallel
@@ -268,6 +238,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'mattn/emmet-vim'
 Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-sensible'
 call plug#end()
 
 " Ctrl-P settings.
@@ -338,7 +309,7 @@ let g:syntastic_check_on_wq = 0
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 08. Autocommands
+" 09. Autocommands
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 augroup vimrcFileTypes
