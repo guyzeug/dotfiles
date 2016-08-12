@@ -78,6 +78,7 @@ Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'mattn/emmet-vim'
+Plug 'scrooloose/syntastic'
 call plug#end()
 
 "" Wildcards to ignore
@@ -491,3 +492,8 @@ hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
 hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
 
 let g:user_emmet_leader_key='hh'
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
