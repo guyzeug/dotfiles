@@ -190,17 +190,9 @@ nnoremap <leader><leader> <C-^>
 nnoremap <leader>ff :CtrlP .<cr>
 nnoremap <leader>fj :execute ":CtrlP " . expand('%:p:h')<cr>
 
-" ------------------------------------------------
-" TO CONFIRM
-
-"set encoding=utf-8 " Force UTF-8 as default
-" set termencoding=utf-8 " Also for terminals.
-
 " Use Q for formatting the current paragraph (or selection)
-" vmap Q gq
-" nmap Q gqap
-" ------------------------------------------------
-
+vmap Q gq
+nmap Q gqap
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 06. Plugins
