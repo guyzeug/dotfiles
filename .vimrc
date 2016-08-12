@@ -48,39 +48,6 @@ set backspace=indent,eol,start
 
 set matchpairs+=<:>
 
-" The following line forces vim-plug to run on 1 thread, as the parallel
-" install does not work at the moment on windows
-let g:plug_threads = 1
-
-call plug#begin('~/.vim/plugged')
-" Add plugins to &runtimepath
-Plug 'ctrlpvim/ctrlp.vim'
-
-Plug 'junegunn/vim-easy-align'
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
-Plug 'tpope/vim-commentary'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-nnoremap <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" Show the bookmarks table on startup
-let NERDTreeShowBookmarks=1
-let NERDTreeShowHidden=1
-
-" Press v over and over again to expand selection
-Plug 'terryma/vim-expand-region'
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
-
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-surround'
-Plug 'itchyny/lightline.vim'
-Plug 'ap/vim-buftabline'
-Plug 'mattn/emmet-vim'
-Plug 'scrooloose/syntastic'
-call plug#end()
-
 "" Wildcards to ignore
 ""
 "" Finder metadata
@@ -242,10 +209,6 @@ set noshowmode
 set textwidth=0
 set wrapmargin=0
 
-" Open new split panes to right and bottom, which feels more natural set
-" splitbelow
-set splitright
-
 " make tab completion for files/buffers act like bash
 set wildmenu
 " use emacs-style tab completion when selecting files, etc
@@ -254,14 +217,6 @@ set wildmode=longest,list
 set wildmode=list:longest,full
 " allow unsaved background buffers and remember marks/undo for them
 set hidden
-
-" Move lines with Alt + j / k
-" nnoremap <A-j> :m .+1<CR>==
-" nnoremap <A-k> :m .-2<CR>==
-" inoremap <A-j> <Esc>:m .+1<CR>==gi
-" inoremap <A-k> <Esc>:m .-2<CR>==gi
-" vnoremap <A-j> :m '>+1<CR>gv=gv
-" vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " move vertically by visual line
 "nnoremap j gj
@@ -306,6 +261,25 @@ set termencoding=utf-8 " Also for terminals.
 " 07. Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" The following line forces vim-plug to run on 1 thread, as the parallel
+" install does not work at the moment on windows
+let g:plug_threads = 1
+
+call plug#begin('~/.vim/plugged')
+" Add plugins to &runtimepath
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'terryma/vim-expand-region'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'itchyny/lightline.vim'
+Plug 'ap/vim-buftabline'
+Plug 'mattn/emmet-vim'
+Plug 'scrooloose/syntastic'
+call plug#end()
+
 " Ctrl-P settings.
 "------------------------------------------------------------------------
 let g:ctrlp_max_files=0 " maximum number of files to scan (0 = no limit)
@@ -315,6 +289,62 @@ let g:ctrlp_match_window = 'results:100' " increase the number of suggestions. I
                                           " this line and when CtrlP is open use
                                           "    Ctrl-D to switch between file / path mode
                                           "    Ctrl-R to switch between regex / non regex mode
+
+" Vim-Easy-Align settings.
+"------------------------------------------------------------------------
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+" NERDTree settings.
+"------------------------------------------------------------------------
+nnoremap <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Show the bookmarks table on startup
+let NERDTreeShowBookmarks=1
+let NERDTreeShowHidden=1
+
+" Vim-Expand-Region settings.
+"------------------------------------------------------------------------
+" Press v over and over again to expand selection
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+" Add support for <>
+call expand_region#custom_text_objects({
+      \ 'i>' :1,
+      \ })
+
+" BufTabLine settings.
+"------------------------------------------------------------------------
+let g:buftabline_indicators=1
+let g:buftabline_numbers=1
+
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(10)
+
+" Custom group             Default link      Meaning
+" *BufTabLineCurrent*        |TabLineSel|        Buffer shown in current window
+" *BufTabLineActive*         |PmenuSel|          Buffer shown in other window
+" *BufTabLineHidden*         |TabLine|           Buffer not currently visible
+" *BufTabLineFill*           |TabLineFill|       Empty area
+hi! BufTabLineCurrent term=bold cterm=bold gui=bold guifg=peru
+hi! BufTabLineFill guibg=slategrey
+hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
+hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
+
+" Syntastic settings.
+"------------------------------------------------------------------------
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 augroup vimrcFileTypes
   " Clear all autocmds in the group
@@ -346,10 +376,6 @@ augroup vimrcWhiteSpaces
   " Delete trailing spaces on save
   autocmd BufWritePre * :%s/\s\+$//e
 augroup END
-
-"" Syntastic options
-let g:syntastic_check_on_open = 1
-let g:syntastic_quiet_messages = {'level': 'warnings'}
 
 
 ""
@@ -462,38 +488,3 @@ if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
-" Add support for <> in vim-expand-region
-call expand_region#custom_text_objects({
-      \ 'i>' :1,
-      \ })
-
-let g:buftabline_indicators=1
-let g:buftabline_numbers=1
-
-nmap <leader>1 <Plug>BufTabLine.Go(1)
-nmap <leader>2 <Plug>BufTabLine.Go(2)
-nmap <leader>3 <Plug>BufTabLine.Go(3)
-nmap <leader>4 <Plug>BufTabLine.Go(4)
-nmap <leader>5 <Plug>BufTabLine.Go(5)
-nmap <leader>6 <Plug>BufTabLine.Go(6)
-nmap <leader>7 <Plug>BufTabLine.Go(7)
-nmap <leader>8 <Plug>BufTabLine.Go(8)
-nmap <leader>9 <Plug>BufTabLine.Go(9)
-nmap <leader>0 <Plug>BufTabLine.Go(10)
-
-" Custom group             Default link      Meaning
-" *BufTabLineCurrent*        |TabLineSel|        Buffer shown in current window
-" *BufTabLineActive*         |PmenuSel|          Buffer shown in other window
-" *BufTabLineHidden*         |TabLine|           Buffer not currently visible
-" *BufTabLineFill*           |TabLineFill|       Empty area
-hi! BufTabLineCurrent term=bold cterm=bold gui=bold guifg=peru
-hi! BufTabLineFill guibg=slategrey
-hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
-hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
-
-" let g:user_emmet_leader_key='hh'
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
