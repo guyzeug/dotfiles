@@ -54,13 +54,13 @@ let g:plug_threads = 1
 
 call plug#begin('~/.vim/plugged')
 " Add plugins to &runtimepath
-Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
+Plug 'ctrlpvim/ctrlp.vim'
 
-Plug 'https://github.com/junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-Plug 'https://github.com/tpope/vim-commentary.git'
+Plug 'tpope/vim-commentary'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 nnoremap <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
