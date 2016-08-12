@@ -491,7 +491,7 @@ hi! BufTabLineFill guibg=slategrey
 hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
 hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
 
-let g:user_emmet_leader_key='hh'
+" let g:user_emmet_leader_key='hh'
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
