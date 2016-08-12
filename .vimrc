@@ -11,6 +11,15 @@ set backupdir=$home/vim_temp/backup//
 " the same time and have two different backup files
 set directory=$home/vim_temp/swp//
 
+set hidden
+set fileformat=unix
+set fileformats=unix,dos,mac " support all three file-format with unix no. 1
+set wildmode=list:longest,full
+set matchpairs+=<:>
+
+" Cross platform solution to copy / paste using the system's clipboard
+set clipboard^=unnamed,unnamedplus
+
 " swap ; and : Convenient
 nnoremap ; :
 nnoremap : ;
@@ -20,20 +29,14 @@ vnoremap : ;
 " jk is escape
 inoremap jk <esc>
 
-" To stop using the arrow keys
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-
 " The way it should have been.
 noremap Y y$
 
-" Cross platform solution to copy / paste using the system's clipboard
-set clipboard^=unnamed,unnamedplus
-
-set wildmode=list:longest,full
-set hidden
+" move vertically by visual line
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
 
 " If for any reason the line above does not work or show some limitations,
 " look into doing the following:
@@ -43,7 +46,12 @@ set hidden
 " map <leader>d "+d
 " more ?
 
-set matchpairs+=<:>
+" To stop using the arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
 
 "" Wildcards to ignore
 ""
@@ -124,7 +132,7 @@ set noshowmode            " the mode information is displayed via lightline
 set equalalways           " Multiple windows, when created, are equal in size"
 set splitbelow splitright " Put the new windows to the right/bottom"
 set lazyredraw            " Don't update the display while executing macros
-
+set report=0              " Tell me how many lines commands change. Always.
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 04. Text Formatting/Layout                                                 "
@@ -135,7 +143,6 @@ set shiftwidth=4          " indent/outdent by 4 columns
 set shiftround            " always indent/outdent to the nearest tabstop
 set expandtab             " use spaces instead of tabs
 "set smartindent           " automatically insert one extra level of indentation
-set nowrap                " don't wrap text
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -186,30 +193,8 @@ nnoremap <leader>fj :execute ":CtrlP " . expand('%:p:h')<cr>
 " ------------------------------------------------
 " TO CONFIRM
 
-" apparently this is how to avoid automatic line breaks when typing long lines
-set textwidth=0
-set wrapmargin=0
-
-
-" move vertically by visual line
-"nnoremap j gj
-"nnoremap k gk
-"vnoremap j gj
-"vnoremap k gk
-
-set report=0 " Tell me how many lines commands change. Always.
-" what to show when I hit :set list
-"set listchars=eol:¬,tab:▸\ ,trail:·,extends:❯,precedes:❮,nbsp:⁝
-
-" Display extra whitespace
-"set list listchars=tab:»·,trail:·,nbsp:·
-
-set fileformat=unix
-set fileformats=unix,dos,mac " support all three file-format with unix no. 1
 "set encoding=utf-8 " Force UTF-8 as default
-set termencoding=utf-8 " Also for terminals.
-
-" set ttyfast                   " we have a fast terminal
+" set termencoding=utf-8 " Also for terminals.
 
 " Use Q for formatting the current paragraph (or selection)
 " vmap Q gq
