@@ -5,11 +5,11 @@
 " possible, as it has side effects.
 set nocompatible
 
-set backupdir=$home/vim_temp/backup//
+set backupdir=~/vim_temp/backup//
 " adding double slash at then end of the swap path makes the backup filenames
 " include their location so that two files with the same name can be edited at
 " the same time and have two different backup files
-set directory=$home/vim_temp/swp//
+set directory=~/vim_temp/swp//
 
 set hidden
 set fileformat=unix
