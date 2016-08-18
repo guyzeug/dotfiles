@@ -277,6 +277,13 @@ hi! BufTabLineFill guibg=slategrey
 hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
 hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
 
+" Emmet settings.
+"------------------------------------------------------------------------
+" Remap emmet leader key. If for any reason that proves to not always work
+" or be inconvenient try to map 'jj' instead to Emmet original key binding,
+" i.e imap jj <C-y>, / nmap jj <C-y>
+let g:user_emmet_leader_key=','
+
 " Syntastic settings.
 "------------------------------------------------------------------------
 let g:syntastic_always_populate_loc_list = 1
