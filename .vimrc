@@ -216,6 +216,7 @@ Plug 'mattn/emmet-vim'
 Plug 'scrooloose/syntastic'
 Plug 'tpope/vim-sensible'
 Plug 'sheerun/vim-polyglot'
+Plug 'mtth/scratch.vim'
 call plug#end()
 
 " Ctrl-P settings.
@@ -291,6 +292,11 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_html_tidy_exec = 'C:/Dev/Tools/tidy-5.2.0-win64/bin/tidy'
+
+
+" Scratch settings.
+"------------------------------------------------------------------------
+let g:scratch_persistence_file = "~/vim_temp/scratch.txt"
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
