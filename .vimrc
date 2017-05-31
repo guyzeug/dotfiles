@@ -112,7 +112,9 @@ else
 endif
 
 " set colorscheme
-if has("unix") && !has("mac")
+if has("mac")
+    colorscheme desert
+elseif has("unix")
     colorscheme industry
 else
     colorscheme desert
@@ -207,7 +209,13 @@ nmap Q gqap
 " install does not work at the moment on windows
 let g:plug_threads = 1
 
-call plug#begin('~/.vim/plugged')
+if has("mac")
+    call plug#begin('~/.vim/plugged-mac')
+elseif has("unix")
+    call plug#begin('~/.vim/plugged-linux')
+else
+    call plug#begin('~/.vim/plugged-windows')
+endif
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-commentary'

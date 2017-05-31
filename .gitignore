@@ -1,3 +1,5 @@
-.vim/plugged
+.vim/plugged-mac
+.vim/plugged-linux
+.vim/plugged-windows
 .vim/.netrwhist
 .vimrc.local
