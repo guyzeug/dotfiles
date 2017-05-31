@@ -116,8 +116,10 @@ if has("mac")
     colorscheme desert
 elseif has("unix")
     colorscheme industry
+    set lines=50 columns=160
 else
     colorscheme desert
+    set lines=50 columns=160
 endif
 
 
@@ -134,7 +136,6 @@ set noshowmatch           " Don't jump cursor to matching brace
 set cmdheight=1
 set scrolloff=5           " always show me the next/previous 5 lines
 set showcmd               " display incomplete command
-set lines=50 columns=160
 set noshowmode            " the mode information is displayed via lightline
 set equalalways           " Multiple windows, when created, are equal in size"
 set splitbelow splitright " Put the new windows to the right/bottom"
