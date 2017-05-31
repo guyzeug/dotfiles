@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/guillaume/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -84,3 +84,16 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# want your terminal to support 256 color schemes? I do ...
+export TERM="xterm-256color"
+#
+# # if you do a 'rm *', Zsh will give you a sanity check!
+setopt RM_STAR_WAIT
+#
+# # allows you to type Bash style comments on your command line
+# # good 'ol Bash
+# setopt interactivecomments
+#
+# # Zsh has a spelling corrector
+setopt CORRECT
