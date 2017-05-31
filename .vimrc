@@ -111,7 +111,12 @@ else
     set guifont=Consolas:h11:cANSI
 endif
 
-colorscheme desert        " set colorscheme
+" set colorscheme
+if has("unix") && !has("mac")
+    colorscheme industry
+else
+    colorscheme desert
+endif
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
