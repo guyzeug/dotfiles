@@ -36,7 +36,7 @@ read password
 echo
 echo "Update fstab"
 sudo -- sh -c -e "echo '# map nas folders' >> /etc/fstab"
-sudo -- sh -c -e "echo '//nas/video /home/guillaume/nas/video cifs rwser=$username,password=$password=$uid,gid=$gid=utf8  0 0' >> /etc/fstab"
+sudo -- sh -c -e "echo '//nas/video /home/guillaume/nas/video cifs rw,user=$username,password=$password,uid=$uid,gid=$gid,iocharset=utf8  0 0' >> /etc/fstab"
 
 echo
 echo "Content of fstab after update"
