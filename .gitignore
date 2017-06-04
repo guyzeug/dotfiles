@@ -3,3 +3,4 @@
 .vim/plugged-windows
 .vim/.netrwhist
 .vimrc.local
+vim_temp
