@@ -20,11 +20,11 @@ echo "Host nas
     User admin
 
 Host clouco
-    HostName 75.126.154.152
+    HostName pagodabox
     Port 2604
     User gopagoda
 
 Host cloucospaces
-    HostName 75.126.154.152
+    HostName pagodabox
     Port 3791
     User gopagoda" >> ~/.ssh/config
