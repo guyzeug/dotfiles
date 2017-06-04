@@ -135,12 +135,20 @@ then
     exit 1
 fi
 
-# Install git & vim
+# Install and configure git
 sudo apt install git || pause
+git config --global core.autocrlf input
+git config --global user.name "Guillaume Le Gorrec"
+git config --global user.email "legorrecg@gmail.com"
+
+# Install vim
 sudo apt install vim || pause
 
 # Install hp utility
 sudo apt install hplip-gui || pause
+
+# Install Dropbox
+sudo apt install dropbox || pause
 
 # Install Chrome manually
 continue_quit "#### Manually install Chrome"
@@ -150,8 +158,8 @@ then
     exit 1
 fi
 
-# Install Dropbox manually
-continue_quit "#### Manually install Dropbox"
+# Configure Dropbox
+continue_quit "#### Login to Dropbox"
 if [ $response == "q" ]
 then
     echo "Exiting..."
@@ -183,5 +191,10 @@ sudo mv -v /etc/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.p
 # Install Firejail
 echo "Install Firejail to sandbox applications"
 sudo apt install firejail || pause
+
+# Create vim symlinks
+ln -s ~/Dropbox/Applications/dotfiles/vim_temp ~/vim_temp
+ln -s ~/Dropbox/Applications/dotfiles/.vimrc ~/.vimrc
+ln -s ~/Dropbox/Applications/dotfiles/.vim ~/.vim
 
 echo "Install complete"
