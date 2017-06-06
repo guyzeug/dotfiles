@@ -111,24 +111,16 @@ continue_or_quit()
 #     Quit $error
 # fi
 
-sudo apt update
-sudo apt full-upgrade
-
-# Install VMWare tools if necessary
-yes_no_quit "Is this install running in VMWare?"
-if [ "$response" == "q" ]
+# Manually install Chrome
+continue_quit "#### Manually install Chrome"
+if [ $response == "q" ]
 then
     echo "Exiting..."
     exit 1
-elif [ "$response" == "y" ]
-then
-    sudo apt install open-vm-tools-desktop || pause
-else
-    echo skip install vmtools
 fi
 
-# Manually install proprietary drivers
-continue_quit "#### Manually install / update the drivers"
+# Start Chrome, choose to make it the default browser and sign in
+continue_quit "Start Chrome, choose to make it the default browser and sign in"
 if [ $response == "q" ]
 then
     echo "Exiting..."
@@ -150,36 +142,6 @@ sudo apt install hplip-gui || pause
 # Install Dropbox
 sudo apt install dropbox || pause
 
-# Install Chrome manually
-continue_quit "#### Manually install Chrome"
-if [ $response == "q" ]
-then
-    echo "Exiting..."
-    exit 1
-fi
-
-# Configure Dropbox
-continue_quit "#### Login to Dropbox"
-if [ $response == "q" ]
-then
-    echo "Exiting..."
-    exit 1
-fi
-
-continue_quit "#### WARNING: make sure the Dropbox folder 'Photos/Photos NAS' is NOT ticked"
-if [ $response == "q" ]
-then
-    echo "Exiting..."
-    exit 1
-fi
-
-continue_quit "#### WARNING: make sure dotfiles folder has been fully downloaded"
-if [ $response == "q" ]
-then
-    echo "Exiting..."
-    exit 1
-fi
-
 # Increase the disk space by limiting the reserved space for root to 2%
 echo "Increase the disk space by limiting the reserved space for root to 2%"
 sudo tune2fs -m 2 /dev/sda1
@@ -191,10 +153,5 @@ sudo mv -v /etc/polkit-1/localauthority/50-local.d/com.ubuntu.enable-hibernate.p
 # Install Firejail
 echo "Install Firejail to sandbox applications"
 sudo apt install firejail || pause
-
-# Create vim symlinks
-ln -s ~/Dropbox/Applications/dotfiles/vim_temp ~/vim_temp
-ln -s ~/Dropbox/Applications/dotfiles/.vimrc ~/.vimrc
-ln -s ~/Dropbox/Applications/dotfiles/.vim ~/.vim
 
 echo "Install complete"
