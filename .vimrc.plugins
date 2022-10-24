@@ -1,0 +1,182 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" The following line forces vim-plug to run on 1 thread, as the parallel
+" install does not work at the moment on windows
+let g:plug_threads = 1
+
+if has("mac")
+    call plug#begin('~/.vim/plugged-mac')
+elseif has("unix")
+    call plug#begin('~/.vim/plugged-linux')
+else
+    call plug#begin('~/.vim/plugged-windows')
+endif
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'terryma/vim-expand-region'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'itchyny/lightline.vim'
+Plug 'ap/vim-buftabline'
+Plug 'mattn/emmet-vim'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-sensible'
+Plug 'sheerun/vim-polyglot'
+Plug 'mtth/scratch.vim'
+call plug#end()
+
+" Ctrl-P settings.
+"------------------------------------------------------------------------
+let g:ctrlp_max_files=0 " maximum number of files to scan (0 = no limit)
+let g:ctrlp_working_path_mode='' " apparently needed (tested on dev.php)
+let g:ctrlp_open_new_file = 'r' " open new file in current window
+let g:ctrlp_match_window = 'results:100' " increase the number of suggestions. If this is to slow remove
+                                          " this line and when CtrlP is open use
+                                          "    Ctrl-D to switch between file / path mode
+                                          "    Ctrl-R to switch between regex / non regex mode
+
+" Vim-Easy-Align settings.
+"------------------------------------------------------------------------
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+" NERDTree settings.
+"------------------------------------------------------------------------
+nnoremap <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Show the bookmarks table on startup
+let NERDTreeShowBookmarks=1
+let NERDTreeShowHidden=1
+
+" Vim-Expand-Region settings.
+"------------------------------------------------------------------------
+" Press v over and over again to expand selection
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+" Add support for <>
+call expand_region#custom_text_objects({
+      \ 'i>' :1,
+      \ })
+
+" BufTabLine settings.
+"------------------------------------------------------------------------
+let g:buftabline_indicators=1
+let g:buftabline_numbers=1
+
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(10)
+
+" Custom group             Default link      Meaning
+" *BufTabLineCurrent*      |TabLineSel|        Buffer shown in current window
+" *BufTabLineActive*       |PmenuSel|          Buffer shown in other window
+" *BufTabLineHidden*       |TabLine|           Buffer not currently visible
+" *BufTabLineFill*         |TabLineFill|       Empty area
+hi! BufTabLineCurrent term=bold cterm=bold gui=bold guifg=peru
+hi! BufTabLineFill guibg=slategrey
+hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
+hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
+
+" Emmet settings.
+"------------------------------------------------------------------------
+" Remap emmet leader key. If for any reason that proves to not always work
+" or be inconvenient try to map 'jj' instead to Emmet original key binding,
+" i.e imap jj <C-y>, / nmap jj <C-y>
+let g:user_emmet_leader_key=','
+
+" Syntastic settings.
+"------------------------------------------------------------------------
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_html_tidy_exec = 'C:/Dev/Tools/tidy-5.2.0-win64/bin/tidy'
+
+
+" Scratch settings.
+"------------------------------------------------------------------------
+let g:scratch_persistence_file = "~/vim_temp/scratch.txt"
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Autocommands
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup vimrcFileTypes
+  autocmd!
+  autocmd FileType           gitcommit   setlocal spell
+  autocmd FileType           latex       setlocal spell
+  autocmd FileType           markdown    setlocal spell
+  autocmd FileType           plaintex    setlocal spell
+  autocmd FileType           text        setlocal spell
+augroup END
+
+" Remove trailing whitespaces on save
+augroup vimrcWhiteSpaces
+  autocmd!
+  autocmd BufWritePre * :%s/\s\+$//e
+augroup END
+
+" Keymap functions
+function! s:MapHashrocket()
+  inoremap <C-l> <space>=><space>
+endfunction
+
+function! s:MapLeftArrow()
+  inoremap <C-l> <-
+endfunction
+
+function! s:MapRightArrow(spaces)
+  if a:spaces == 0
+    inoremap <C-l> ->
+  elseif a:spaces == 1
+    inoremap <C-l> <space>->
+  elseif a:spaces > 1
+    inoremap <C-l> <space>-><space>
+  endif
+endfunction
+
+augroup vimrcArrow
+  autocmd!
+  autocmd FileType php        call s:MapHashrocket()
+  autocmd FileType ruby       call s:MapHashrocket()
+  autocmd FileType eruby      call s:MapHashrocket()
+  autocmd FileType haml       call s:MapHashrocket()
+  autocmd FileType puppet     call s:MapHashrocket()
+  autocmd FileType scala      call s:MapHashrocket()
+  autocmd FileType javascript call s:MapHashrocket()
+  autocmd FileType typescript call s:MapHashrocket()
+  autocmd FileType go         call s:MapLeftArrow()
+  autocmd FileType c          call s:MapRightArrow(0)
+  autocmd FileType cpp        call s:MapRightArrow(0)
+  autocmd FileType objc       call s:MapRightArrow(0)
+  autocmd FileType coffee     call s:MapRightArrow(1)
+  autocmd FileType java       call s:MapRightArrow(2)
+  autocmd FileType rust       call s:MapRightArrow(2)
+  autocmd FileType swift      call s:MapRightArrow(2)
+augroup END
+
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+" Taken from: https://github.com/garybernhardt/dotfiles/blob/master/.vimrc#L90
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>

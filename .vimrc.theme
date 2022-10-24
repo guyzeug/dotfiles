@@ -1,0 +1,28 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Theme/Colors                                                           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set the font depending on the client
+if has("gui_running")
+    if has("gui_gtk2")
+        set guifont=Inconsolata\ 14
+    elseif has("gui_macvim")
+        set guifont=Menlo\ Regular:h14
+    elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+    endif
+    set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
+else
+    set guifont=Consolas:h11:cANSI
+endif
+
+" set colorscheme
+if has("mac")
+    colorscheme desert
+elseif has("unix")
+    colorscheme industry
+    set lines=50 columns=160
+else
+    colorscheme desert
+    set lines=50 columns=160
+endif

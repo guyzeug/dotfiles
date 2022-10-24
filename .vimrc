@@ -21,10 +21,13 @@ set matchpairs+=<:>
 set clipboard^=unnamed,unnamedplus
 
 " swap ; and : Convenient
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+nnoremap é :
+nnoremap : é
+vnoremap é :
+vnoremap : é
+
+" swap f and / for easier searching
+nnoremap f /
 
 " jk is escape
 inoremap jk <esc>
@@ -94,40 +97,10 @@ set wildignore+=.imported_roles/**
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 02. Theme/Colors                                                           "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set the font depending on the client
-if has("gui_running")
-    if has("gui_gtk2")
-        set guifont=Inconsolata\ 14
-    elseif has("gui_macvim")
-        set guifont=Menlo\ Regular:h14
-    elseif has("gui_win32")
-        set guifont=Consolas:h11:cANSI
-    endif
-    set guioptions-=m  "remove menu bar
-    set guioptions-=T  "remove toolbar
-else
-    set guifont=Consolas:h11:cANSI
-endif
-
-" set colorscheme
-if has("mac")
-    colorscheme desert
-elseif has("unix")
-    colorscheme industry
-    set lines=50 columns=160
-else
-    colorscheme desert
-    set lines=50 columns=160
-endif
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 03. Vim UI                                                                 "
+" 02. Vim UI                                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set number                " show line numbers
-set relativenumber        " show relative numbers
+"set relativenumber        " show relative numbers
 set nocursorline          " do not highlight current line (it can make redrawing window slow)
 set hlsearch              " highlight all search matches
 set ignorecase smartcase  " make searches case-sensitive only if they contain upper-case characters
@@ -144,7 +117,7 @@ set report=0              " Tell me how many lines commands change. Always.
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 04. Text Formatting/Layout                                                 "
+" 03. Text Formatting/Layout                                                 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tabstop=4             " tab spacing
 set softtabstop=4         " unify
@@ -154,7 +127,7 @@ set expandtab             " use spaces instead of tabs
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 05. Key Bindings
+" 04. Key Bindings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = "\<Space>"
 let maplocalleader = ","
@@ -204,117 +177,7 @@ nmap Q gqap
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 06. Plugins
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" The following line forces vim-plug to run on 1 thread, as the parallel
-" install does not work at the moment on windows
-let g:plug_threads = 1
-
-if has("mac")
-    call plug#begin('~/.vim/plugged-mac')
-elseif has("unix")
-    call plug#begin('~/.vim/plugged-linux')
-else
-    call plug#begin('~/.vim/plugged-windows')
-endif
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-commentary'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'terryma/vim-expand-region'
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-surround'
-Plug 'itchyny/lightline.vim'
-Plug 'ap/vim-buftabline'
-Plug 'mattn/emmet-vim'
-Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-sensible'
-Plug 'sheerun/vim-polyglot'
-Plug 'mtth/scratch.vim'
-call plug#end()
-
-" Ctrl-P settings.
-"------------------------------------------------------------------------
-let g:ctrlp_max_files=0 " maximum number of files to scan (0 = no limit)
-let g:ctrlp_working_path_mode='' " apparently needed (tested on dev.php)
-let g:ctrlp_open_new_file = 'r' " open new file in current window
-let g:ctrlp_match_window = 'results:100' " increase the number of suggestions. If this is to slow remove
-                                          " this line and when CtrlP is open use
-                                          "    Ctrl-D to switch between file / path mode
-                                          "    Ctrl-R to switch between regex / non regex mode
-
-" Vim-Easy-Align settings.
-"------------------------------------------------------------------------
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
-
-" NERDTree settings.
-"------------------------------------------------------------------------
-nnoremap <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" Show the bookmarks table on startup
-let NERDTreeShowBookmarks=1
-let NERDTreeShowHidden=1
-
-" Vim-Expand-Region settings.
-"------------------------------------------------------------------------
-" Press v over and over again to expand selection
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
-" Add support for <>
-call expand_region#custom_text_objects({
-      \ 'i>' :1,
-      \ })
-
-" BufTabLine settings.
-"------------------------------------------------------------------------
-let g:buftabline_indicators=1
-let g:buftabline_numbers=1
-
-nmap <leader>1 <Plug>BufTabLine.Go(1)
-nmap <leader>2 <Plug>BufTabLine.Go(2)
-nmap <leader>3 <Plug>BufTabLine.Go(3)
-nmap <leader>4 <Plug>BufTabLine.Go(4)
-nmap <leader>5 <Plug>BufTabLine.Go(5)
-nmap <leader>6 <Plug>BufTabLine.Go(6)
-nmap <leader>7 <Plug>BufTabLine.Go(7)
-nmap <leader>8 <Plug>BufTabLine.Go(8)
-nmap <leader>9 <Plug>BufTabLine.Go(9)
-nmap <leader>0 <Plug>BufTabLine.Go(10)
-
-" Custom group             Default link      Meaning
-" *BufTabLineCurrent*      |TabLineSel|        Buffer shown in current window
-" *BufTabLineActive*       |PmenuSel|          Buffer shown in other window
-" *BufTabLineHidden*       |TabLine|           Buffer not currently visible
-" *BufTabLineFill*         |TabLineFill|       Empty area
-hi! BufTabLineCurrent term=bold cterm=bold gui=bold guifg=peru
-hi! BufTabLineFill guibg=slategrey
-hi! BufTabLineActive ctermfg=8 ctermbg=0 guibg=slategrey
-hi! BufTabLineHidden ctermfg=8 ctermbg=0 guibg=slategrey
-
-" Emmet settings.
-"------------------------------------------------------------------------
-" Remap emmet leader key. If for any reason that proves to not always work
-" or be inconvenient try to map 'jj' instead to Emmet original key binding,
-" i.e imap jj <C-y>, / nmap jj <C-y>
-let g:user_emmet_leader_key=','
-
-" Syntastic settings.
-"------------------------------------------------------------------------
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_html_tidy_exec = 'C:/Dev/Tools/tidy-5.2.0-win64/bin/tidy'
-
-
-" Scratch settings.
-"------------------------------------------------------------------------
-let g:scratch_persistence_file = "~/vim_temp/scratch.txt"
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 09. Autocommands
+" 05. Autocommands
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup vimrcFileTypes
   autocmd!
@@ -388,10 +251,14 @@ inoremap <s-tab> <c-n>
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 09. Local settings
+" 06. Local settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if filereadable(glob("~/.vimrc.local"))
-    source ~/.vimrc.local
+if filereadable(glob("~/.vimrc.theme"))
+    " source ~/.vimrc.theme
+endif
+
+if filereadable(glob("~/.vimrc.plugins"))
+    " source ~/.vimrc.plugins
 endif
 
