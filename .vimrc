@@ -109,7 +109,7 @@ set noshowmatch           " Don't jump cursor to matching brace
 set cmdheight=1
 set scrolloff=5           " always show me the next/previous 5 lines
 set showcmd               " display incomplete command
-set noshowmode            " the mode information is displayed via lightline
+" set noshowmode            " the mode information is displayed via lightline
 set equalalways           " Multiple windows, when created, are equal in size"
 set splitbelow splitright " Put the new windows to the right/bottom"
 set lazyredraw            " Don't update the display while executing macros
