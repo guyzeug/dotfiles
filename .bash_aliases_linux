@@ -1,2 +1,11 @@
 # Use netstat command to quickly list all TCP/UDP port on the server
 alias ports='netstat -tulanp'
+
+# I use for monitoring log tails and directory contents and sizes.
+alias watchtail='watch -n .5 tail -n 20'            # ONLY LINUX
+alias watchdir='watch -n .5 ls -la'                 # ONLY LINUX
+alias watchsize='watch -n .5 du -h –max-depth=1'    # ONLY LINUX
+
+alias getupdates='sudo apt-get update && sudo apt-get upgrade'
+
+alias internal_ip='hostname -I'

@@ -86,6 +86,66 @@ alias psme='psg $USER' # My processes
 
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" # File tree
 
+
+alias external_ip='curl ifconfig.me' (CONFIRMED)
+
+# list folders by size in current directory
+alias usage='du -h --max-depth=1 | sort -rh'
+
+# Git
+alias g="git"
+alias gr="git rm"
+alias grrf="git rm -rf"
+alias gs="git status"
+alias ga="g add"
+alias gaa="g add ."
+alias gaaa="g add -A"
+alias gc="git commit -m"
+# alias gph="git push"
+# alias gpl="git pull"
+# alias gf="git fetch"
+alias gd="git diff --color-words"
+alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+
+# A simpler, and probably more universal, alias returns you to the Git project’s top level. This alias is useful because when you’re working on a project, that project more or less becomes your "temporary home" directory. It should be as simple to go "home" as it is to go to your actual home, and here’s an alias to do it:
+alias cg='cd `git rev-parse --show-toplevel`'
+
+
+# Back Up [function, not alias] – Copy a file to the current directory with today’s date automatically appended to the end.
+bu() { cp "$1" "$1".backup-`date +%y%m%d%H%M%S`; }
+
+# Find a file from the current directory
+alias ff='find . -name '
+
+# shows the path variable
+alias path='echo -e ${PATH//:/\n}'
+
+
+extract () {
+   if [ -f $1 ] ; then
+       case $1 in
+           *.tar.bz2)   tar xvjf $1    ;;
+           *.tar.gz)    tar xvzf $1    ;;
+           *.bz2)       bunzip2 $1     ;;
+           *.rar)       unrar x $1       ;;
+           *.gz)        gunzip $1      ;;
+           *.tar)       tar xvf $1     ;;
+           *.tbz2)      tar xvjf $1    ;;
+           *.tgz)       tar xvzf $1    ;;
+           *.zip)       unzip $1       ;;
+           *.Z)         uncompress $1  ;;
+           *.7z)        7z x $1        ;;
+           *)           echo "don't know how to extract '$1'..." ;;
+       esac
+   else
+       echo "'$1' is not a valid file!"
+   fi
+ }
+
+
+# Resume wget by default
+alias wget="wget -c"
+
 # alias bashrc='vim Dev/dotfiles/.bashrc && source Dev/dotfiles/.bashrc'
 
 eval "$(starship init bash)"

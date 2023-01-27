@@ -1,1 +1,3 @@
 PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+
+alias internal_ip='ipconfig getifaddr en0'
