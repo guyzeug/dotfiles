@@ -87,7 +87,7 @@ alias psme='psg $USER' # My processes
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" # File tree
 
 
-alias external_ip='curl ifconfig.me' (CONFIRMED)
+alias external_ip='curl ifconfig.me'
 
 # list folders by size in current directory
 alias usage='du -h --max-depth=1 | sort -rh'
