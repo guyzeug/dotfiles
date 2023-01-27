@@ -61,20 +61,14 @@ alias now='date +"%T"'
 alias nowtime=now
 alias nowdate='date +"%d-%m-%Y"'
 alias edit='vim'
-alias vi=vim # GLG: not necessary on mac, To be tested on Linux
 alias j='jobs -l'
 alias ping_x5='ping -c 5' # Stop after sending 5 ECHO_REQUEST packets
 alias ping_fast_x100='ping -c 100 -i.2' # Do not wait interval 1 second, go fast
-
-# Use netstat command to quickly list all TCP/UDP port on the server
-# GLG: does not work on mac, does it on Linux ?
-alias ports='netstat -tulanp'
 
 # Add safety nets
 # -------------------------------
 # Do not delete / or prompt if deleting more than 3 files at a time
 # NEVER DO alias rm=... (otherwise on another machine you might call 'rm' expecting the safety net where it isn't there)
-#GLG: does not work on mac, probably because of --preserve-root, to be tested on Linux
 alias del='rm -I --preserve-root'
 
 # confirmation #
@@ -89,15 +83,9 @@ alias chgrp='chgrp --preserve-root'
 
 alias psg='ps -ef | grep -v $$ | grep -i ' # Processes filtered based on param (excluding the grep of the current line)
 alias psme='psg $USER' # My processes
-# OR with --color=always (to be tested on mac and linux)
-# alias psme='ps -ef | grep $USER --color=always'
-# OR with --color=auto (to be tested on mac and linux)
-# alias psme='ps -ef | grep $USER --color=auto'
 
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'" # File tree
 
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-
-alias bashrc='vim Dev/dotfiles/.bashrc && source Dev/dotfiles/.bashrc'
+# alias bashrc='vim Dev/dotfiles/.bashrc && source Dev/dotfiles/.bashrc'
 
 eval "$(starship init bash)"
