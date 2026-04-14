@@ -78,36 +78,40 @@ require("lazy").setup({
     "folke/which-key.nvim",
     config = function()
       local wk = require("which-key")
-      wk.setup({
-        delay = 0,
-      })
+      wk.setup({ delay = 0 })
 
-      wk.register({
-        k = {
-          name = "Comment",
-          l = "Line comment",
-          b = "Block comment",
-        },
-        r = {
-          name = "Refactor",
-          n = "Rename",
-          m = "Extract method",
-          v = "Introduce variable",
-          f = "Introduce field",
-          s = "Change signature",
-          r = "Refactor menu",
-        },
-        g = {
-          name = "Goto",
-          d = "Definition",
-          y = "Type definition",
-          i = "Implementation",
-          u = "Usages",
-          t = "Test",
-          b = "Back",
-          f = "Forward",
-        },
-      }, { prefix = "<leader>" })
+      wk.add({
+        -- Goto group
+        { "<leader>g", group = "Goto" },
+        { "<leader>gd", desc = "Definition" },
+        { "<leader>gy", desc = "Type definition" },
+        { "<leader>gi", desc = "Implementation" },
+        { "<leader>gu", desc = "Usages" },
+        { "<leader>gt", desc = "Test" },
+        { "<leader>gb", desc = "Back" },
+        { "<leader>gf", desc = "Forward" },
+
+        -- Comment group
+        { "<leader>k", group = "Comment" },
+        { "<leader>kl", desc = "Line comment" },
+        { "<leader>kb", desc = "Block comment" },
+
+        -- Word operations
+        { "<leader>d", desc = "Cut word" },
+        { "<leader>y", desc = "Yank word" },
+        { "<leader>c", desc = "Change word" },
+        { "<leader>p", desc = "Paste word" },
+        { "<leader>a", desc = "Select all" },
+
+        -- Refactor group (placeholders unless you add a refactor plugin)
+        { "<leader>r", group = "Refactor" },
+        { "<leader>rn", desc = "Rename" },
+        { "<leader>rm", desc = "Extract method" },
+        { "<leader>rv", desc = "Introduce variable" },
+        { "<leader>rf", desc = "Introduce field" },
+        { "<leader>rs", desc = "Change signature" },
+        { "<leader>rr", desc = "Refactor menu" },
+      })
     end,
   },
 
