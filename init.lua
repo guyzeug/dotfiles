@@ -124,6 +124,14 @@ require("lazy").setup({
   {
     "neovim/nvim-lspconfig",
   },
+
+  {
+     "echasnovski/mini.icons"
+  },
+
+  {
+     "nvim-tree/nvim-web-devicons"
+  },
 })
 
 ------------------------------------------------------------
@@ -135,12 +143,18 @@ map("n", "<leader>kb", "gc") -- block comment via gc in visual mode
 ------------------------------------------------------------
 -- Goto mappings (IdeaVim → LSP)
 ------------------------------------------------------------
-local lsp = require("lspconfig")
+-- LSP setup for Neovim 0.12.1
+local ok, lspconfig = pcall(require, "lspconfig")
+if not ok then
+  return
+end
 
--- Basic LSP servers (adjust as needed)
-lsp.lua_ls.setup({})
-lsp.tsserver.setup({})
-lsp.pyright.setup({})
+lspconfig.lua_ls.setup({})
+
+-- tsserver is deprecated → use ts_ls
+lspconfig.ts_ls.setup({})
+
+lspconfig.pyright.setup({})
 
 map("n", "<leader>gd", vim.lsp.buf.definition)
 map("n", "<leader>gy", vim.lsp.buf.type_definition)
