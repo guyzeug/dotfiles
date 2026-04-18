@@ -1,0 +1,146 @@
+mqtt:
+  enabled: false
+#  host: 192.168.1.123
+#  user: mqtt
+#  password: mqtt
+
+detectors:
+  ov:
+    type: openvino
+    device: GPU
+
+model:
+  width: 300
+  height: 300
+  input_tensor: nhwc
+  input_pixel_format: bgr
+  path: /openvino-model/ssdlite_mobilenet_v2.xml
+  labelmap_path: /openvino-model/coco_91cl_bkgr.txt
+
+ffmpeg:
+  hwaccel_args: preset-vaapi
+
+detect:
+  enabled: true
+  width: 640
+  height: 360
+  fps: 5
+
+record:
+  enabled: true
+  continuous:
+    days: 0
+  motion:
+    days: 3
+
+go2rtc:
+  streams:
+    camera_garage_principal:
+      - rtsp://admin:da7B4TQ3PQ@192.168.1.50:554/h264Preview_01_main
+    camera_garage_sub:
+      - rtsp://admin:da7B4TQ3PQ@192.168.1.50:554/h264Preview_01_sub
+    camera_entree_principal:
+      - rtsp://admin:da7B4TQ3PR@192.168.1.51:554/h264Preview_01_main
+    camera_entree_sub:
+      - rtsp://admin:da7B4TQ3PR@192.168.1.51:554/h264Preview_01_sub
+    camera_terrasse_principal:
+      - rtsp://admin:da7B4TQ3PS@192.168.1.52:554/h264Preview_01_main
+    camera_terrasse_sub:
+      - rtsp://admin:da7B4TQ3PS@192.168.1.52:554/h264Preview_01_sub
+    camera_chambres_principal:
+      - rtsp://admin:da7B4TQ3PT@192.168.1.53:554/h264Preview_01_main
+    camera_chambres_sub:
+      - rtsp://admin:da7B4TQ3PT@192.168.1.53:554/h264Preview_01_sub
+  webrtc:
+    listen: 8555
+    candidates:
+      - 127.0.01:8555
+      - 192.168.1.49:8555
+
+cameras:
+  camera_garage:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/camera_garage_sub
+          roles:
+            - detect
+        - path: rtsp://127.0.0.1:8554/camera_garage_principal
+          roles:
+            - record
+    live:
+      streams:
+        main_stream: camera_garage_principal
+        sub:stream: camera_garage_sub
+    detect:
+      enabled: true
+    objects:
+      track:
+        - person
+        - cat
+    motion:
+      mask: 0.344,0.014,0.344,0.078,0.653,0.078,0.652,0.015
+  camera_entree:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/camera_entree_sub
+          roles:
+            - detect
+        - path: rtsp://127.0.0.1:8554/camera_entree_principal
+          roles:
+            - record
+    live:
+      streams:
+        main_stream: camera_entree_principal
+        sub:stream: camera_entree_sub
+    detect:
+      enabled: true
+    objects:
+      track:
+        - person
+        - cat
+    motion:
+      mask: 0.407,0.017,0.407,0.078,0.594,0.078,0.595,0.014
+  camera_terrasse:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/camera_terrasse_sub
+          roles:
+            - detect
+        - path: rtsp://127.0.0.1:8554/camera_terrasse_principal
+          roles:
+            - record
+    live:
+      streams:
+        main_stream: camera_terrasse_principal
+        sub:stream: camera_terrasse_sub
+    detect:
+      enabled: true
+    objects:
+      track:
+        - person
+        - cat
+    motion:
+      mask: 0.341,0.015,0.341,0.078,0.652,0.078,0.652,0.015
+  camera_chambres:
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/camera_chambres_sub
+          roles:
+            - detect
+        - path: rtsp://127.0.0.1:8554/camera_chambres_principal
+          roles:
+            - record
+    live:
+      streams:
+        main_stream: camera_chambres_principal
+        sub:stream: camera_chambres_sub
+    detect:
+      enabled: true
+    objects:
+      track:
+        - person
+        - cat
+    motion:
+      mask: 0.41,0.012,0.41,0.08,0.593,0.077,0.593,0.015
+version: 0.17-0
+
