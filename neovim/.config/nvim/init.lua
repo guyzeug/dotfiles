@@ -36,12 +36,37 @@ vim.opt.termguicolors = true
 require("lazy").setup({
 
   ----------------------------------------------------------
-  -- ICONS (fix for which-key warnings)
+  -- 🎨 CATPPUCCIN THEME (MOCHA)
+  ----------------------------------------------------------
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup({
+        flavour = "mocha",
+        integrations = {
+          telescope = true,
+          which_key = true,
+          cmp = true,
+          gitsigns = true,
+          mason = true,
+          native_lsp = {
+            enabled = true,
+          },
+        },
+      })
+      vim.cmd.colorscheme("catppuccin")
+    end,
+  },
+
+  ----------------------------------------------------------
+  -- ICONS (fix warnings)
   ----------------------------------------------------------
   { "echasnovski/mini.icons", config = true },
 
   ----------------------------------------------------------
-  -- WHICH-KEY (modern)
+  -- WHICH-KEY
   ----------------------------------------------------------
   {
     "folke/which-key.nvim",
@@ -50,7 +75,7 @@ require("lazy").setup({
   },
 
   ----------------------------------------------------------
-  -- FILE SEARCH (Rider "Search Everywhere")
+  -- TELESCOPE
   ----------------------------------------------------------
   {
     "nvim-telescope/telescope.nvim",
@@ -104,14 +129,14 @@ local map = vim.keymap.set
 -- Escape
 map("i", "jk", "<Esc>")
 
--- ORIGINAL REQUEST: é → :
+-- RESTORED: é → :
 map("n", "é", ":")
 
 -- Core navigation habits
 map("n", "f", "/")
 map("n", "Q", "gq")
 
--- Word operations (Rider-like muscle memory)
+-- Word operations (Rider-style)
 map("n", "<leader>d", "diw")
 map("n", "<leader>y", "yiw")
 map("n", "<leader>c", "ciw")
@@ -134,7 +159,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- LSP servers (modern API)
+-- LSP servers
 vim.lsp.config("pyright", {})
 vim.lsp.enable("pyright")
 
@@ -163,7 +188,7 @@ cmp.setup({
 })
 
 ------------------------------------------------------------
--- TELESCOPE (search)
+-- TELESCOPE
 ------------------------------------------------------------
 local telescope = require("telescope.builtin")
 
