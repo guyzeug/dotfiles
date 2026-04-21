@@ -54,6 +54,7 @@ require("lazy").setup({
           native_lsp = {
             enabled = true,
           },
+	  lualine = true,
         },
       })
         vim.cmd.colorscheme("catppuccin")
@@ -129,6 +130,32 @@ require("lazy").setup({
       "L3MON4D3/LuaSnip",
     }
   },
+
+  ----------------------------------------------------------
+  -- LUALINE
+  ----------------------------------------------------------
+{
+  'nvim-lualine/lualine.nvim',
+  dependencies = { 'nvim-tree/nvim-web-devicons' },
+  config = function()
+    require('lualine').setup({
+      options = {
+        theme = 'wombat',
+        icons_enabled = true,
+        section_separators = '',
+        component_separators = '',
+      },
+      sections = {
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' },
+      },
+    })
+  end
+},
 
   ----------------------------------------------------------
   -- UTILITIES
