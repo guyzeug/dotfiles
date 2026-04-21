@@ -36,10 +36,13 @@ vim.opt.termguicolors = true
 require("lazy").setup({
 
   ----------------------------------------------------------
-  -- UI / ICONS
+  -- ICONS (fix for which-key warnings)
   ----------------------------------------------------------
   { "echasnovski/mini.icons", config = true },
 
+  ----------------------------------------------------------
+  -- WHICH-KEY (modern)
+  ----------------------------------------------------------
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -91,23 +94,24 @@ require("lazy").setup({
   ----------------------------------------------------------
   { "tpope/vim-commentary" },
   { "machakann/vim-highlightedyank" },
-
-  {
-    "phaazon/hop.nvim",
-    config = true,
-  },
 })
 
 ------------------------------------------------------------
--- BASIC KEYMAPS (Rider-like)
+-- BASIC KEYMAPS
 ------------------------------------------------------------
 local map = vim.keymap.set
 
+-- Escape
 map("i", "jk", "<Esc>")
 
+-- ORIGINAL REQUEST: é → :
+map("n", "é", ":")
+
+-- Core navigation habits
 map("n", "f", "/")
 map("n", "Q", "gq")
 
+-- Word operations (Rider-like muscle memory)
 map("n", "<leader>d", "diw")
 map("n", "<leader>y", "yiw")
 map("n", "<leader>c", "ciw")
@@ -115,7 +119,7 @@ map("n", "<leader>p", "viwp")
 map("n", "<leader>a", "ggVG")
 
 ------------------------------------------------------------
--- LSP (MODERN 0.11+ API)
+-- LSP (Neovim 0.11+ MODERN API)
 ------------------------------------------------------------
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(args)
@@ -130,7 +134,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- LSP servers (NEW API)
+-- LSP servers (modern API)
 vim.lsp.config("pyright", {})
 vim.lsp.enable("pyright")
 
@@ -143,7 +147,7 @@ vim.lsp.config("omnisharp", {
 vim.lsp.enable("omnisharp")
 
 ------------------------------------------------------------
--- COMPLETION (nvim-cmp)
+-- COMPLETION
 ------------------------------------------------------------
 local cmp = require("cmp")
 
@@ -159,7 +163,7 @@ cmp.setup({
 })
 
 ------------------------------------------------------------
--- TELESCOPE (SEARCH)
+-- TELESCOPE (search)
 ------------------------------------------------------------
 local telescope = require("telescope.builtin")
 
@@ -168,13 +172,34 @@ map("n", "<leader>fc", telescope.live_grep)
 map("n", "<leader>fr", telescope.oldfiles)
 
 ------------------------------------------------------------
--- WHICH-KEY (MODERN STYLE)
+-- WHICH-KEY (RESTORED LABELS)
 ------------------------------------------------------------
-require("which-key").setup({
-  preset = "modern",
-})
+local wk = require("which-key")
 
-------------------------------------------------------------
--- HOP (motion navigation)
-------------------------------------------------------------
-map("n", "<leader>j", ":HopWord<CR>")
+wk.setup({})
+
+wk.add({
+
+  -- GO TO
+  { "<leader>g", group = "Go to" },
+  { "<leader>gd", desc = "Definition" },
+  { "<leader>gi", desc = "Implementation" },
+  { "<leader>gu", desc = "Usages" },
+
+  -- REFACTOR
+  { "<leader>r", group = "Refactor" },
+  { "<leader>rn", desc = "Rename" },
+
+  -- WORD OPERATIONS
+  { "<leader>d", desc = "Cut word" },
+  { "<leader>y", desc = "Copy word" },
+  { "<leader>c", desc = "Change word" },
+  { "<leader>p", desc = "Paste over word" },
+  { "<leader>a", desc = "Select all" },
+
+  -- FIND
+  { "<leader>f", group = "Find" },
+  { "<leader>ff", desc = "Files" },
+  { "<leader>fc", desc = "Search text" },
+  { "<leader>fr", desc = "Recent files" },
+})
