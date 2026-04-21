@@ -56,7 +56,23 @@ require("lazy").setup({
           },
         },
       })
-      vim.cmd.colorscheme("catppuccin")
+        vim.cmd.colorscheme("catppuccin")
+
+        -- Comments → light green
+        vim.api.nvim_set_hl(0, "Comment", {
+        fg = "#a6e3a1",
+        italic = true,
+        })
+
+        -- Line numbers → light yellow
+        vim.api.nvim_set_hl(0, "LineNr", {
+        fg = "#f9e2af",
+        })
+
+        vim.api.nvim_set_hl(0, "CursorLineNr", {
+        fg = "#f9e2af",
+        bold = true,
+        })
     end,
   },
 
