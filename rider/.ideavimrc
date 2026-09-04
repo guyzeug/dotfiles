@@ -17,6 +17,11 @@ let mapleader=" "
 nnoremap \e :e ~\.ideavimrc<CR>
 nnoremap \r :source ~\.ideavimrc<CR>
 
+" Remap Ctrl+V (windows) and Cmd+V (mac) to be able to paste in command mode
+" (when searching with '/' for instance)
+cnoremap <D-v> <C-r>+
+cnoremap <C-v> <C-r>+
+
 set hlsearch
 " Highlight the search string while typing
 set incsearch
