@@ -186,7 +186,7 @@ map("n", "Q", "gq")
 map("n", "<leader>d", "diw")
 map("n", "<leader>y", "yiw")
 map("n", "<leader>c", "ciw")
-map("n", "<leader>p", "viwp")
+map("n", "<leader>p", 'viw"0p')
 map("n", "<leader>a", "ggVG")
 
 ------------------------------------------------------------
