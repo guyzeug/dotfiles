@@ -30,6 +30,9 @@ vim.opt.hlsearch = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.termguicolors = true
 
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
 ------------------------------------------------------------
 -- PLUGINS
 ------------------------------------------------------------
