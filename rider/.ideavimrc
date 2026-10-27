@@ -191,7 +191,7 @@ map <leader>y yiw
 map <leader>c ciw
 
 " Paste the current word
-map <leader>p viwp
+map <leader>p viw"0p
 
 " Select all
 map <leader>a ggVG
